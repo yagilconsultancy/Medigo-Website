@@ -14,6 +14,15 @@ export interface FleetInputData {
   driver_count: number;
 }
 
+type FleetCompanyApiItem = {
+  id: string;
+  name: string;
+  logo_url?: string | null;
+  contact_person?: string | null;
+  vehicle_count?: number | null;
+  driver_count?: number | null;
+};
+
 export interface FleetDropdownMenuInputProps {
   handleFleetSelected: (fleet: FleetInputData) => void;
   selectedFleetId?: string;
@@ -54,13 +63,13 @@ export const FleetDropdownMenuInput = ({
     const responseData = fleetsQuery.data;
     if (!responseData || !responseData.data) return [];
 
-    return responseData.data.map((fleet) => ({
+    return (responseData.data as FleetCompanyApiItem[]).map((fleet) => ({
       id: fleet.id,
       name: fleet.name,
       logo_url: fleet.logo_url,
       contact_person: fleet.contact_person,
-      vehicle_count: fleet.vehicle_count,
-      driver_count: fleet.driver_count,
+      vehicle_count: fleet.vehicle_count ?? 0,
+      driver_count: fleet.driver_count ?? 0,
     }));
   }, [fleetsQuery.data]);
 

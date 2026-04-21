@@ -324,7 +324,9 @@ const featureCardSections2: FeatureCardSectionConfig[] = [
 ];
 
 export const HomePage = () => {
-  const [expandedFaq, setExpandedFaq] = useState(faqItems[0].id);
+  const [expandedFaq, setExpandedFaq] = useState<
+    (typeof faqItems)[number]['id'] | ''
+  >(faqItems[0].id);
 
   return (
     <AppLayout>

@@ -30,6 +30,23 @@ export interface UserDropdownMenuInputProps {
   selectedUserName?: string;
 }
 
+type DriverApiItem = {
+  user_id: string;
+  first_name?: string | null;
+  last_name?: string | null;
+  avatar_url?: string | null;
+  email?: string | null;
+  rating?: number | null;
+};
+
+type RiderApiItem = {
+  user_id: string;
+  first_name?: string | null;
+  last_name?: string | null;
+  avatar_url?: string | null;
+  email?: string | null;
+};
+
 export const UserDropdownMenuInput = ({
   type,
   handleUserSelected,
@@ -67,22 +84,22 @@ export const UserDropdownMenuInput = ({
   // Transform API data to UserInputData format
   const userList = useMemo<UserInputData[]>(() => {
     if (type === 'driver' && driversData?.success && driversData.data) {
-      return driversData.data.drivers.map((driver) => ({
+      return (driversData.data.drivers as DriverApiItem[]).map((driver) => ({
         id: driver.user_id,
-        firstName: driver.first_name,
-        lastName: driver.last_name,
+        firstName: driver.first_name ?? '',
+        lastName: driver.last_name ?? '',
         imageUri: driver.avatar_url || undefined,
         email: driver.email || undefined,
         role: 'driver' as const,
-        rating: driver.rating || 0,
+        rating: driver.rating ?? 0,
       }));
     }
 
     if (type === 'rider' && ridersData?.success && ridersData.data) {
-      return ridersData.data.riders.map((rider) => ({
+      return (ridersData.data.riders as RiderApiItem[]).map((rider) => ({
         id: rider.user_id,
-        firstName: rider.first_name,
-        lastName: rider.last_name,
+        firstName: rider.first_name ?? '',
+        lastName: rider.last_name ?? '',
         imageUri: rider.avatar_url || undefined,
         email: rider.email || undefined,
         role: 'rider' as const,

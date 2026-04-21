@@ -15,6 +15,15 @@ export interface RideInputData {
   rideType: string;
 }
 
+type RideApiItem = {
+  id: string;
+  pickup_address?: string | null;
+  destination_address?: string | null;
+  scheduled_at?: string | null;
+  status?: string | null;
+  ride_type?: string | null;
+};
+
 export interface RideDropdownMenuInputProps {
   handleRideSelected: (ride: RideInputData) => void;
   selectedRideId?: string;
@@ -39,13 +48,13 @@ export const RideDropdownMenuInput = ({
   // Transform API data to RideInputData format
   const rideList = useMemo<RideInputData[]>(() => {
     if (ridesData?.success && Array.isArray(ridesData.data)) {
-      return ridesData.data.map((ride) => ({
+      return (ridesData.data as RideApiItem[]).map((ride) => ({
         id: ride.id,
-        pickup_address: ride.pickup_address,
-        destination_address: ride.destination_address,
-        scheduledAt: ride.scheduled_at,
-        status: ride.status,
-        rideType: ride.ride_type,
+        pickup_address: ride.pickup_address ?? '',
+        destination_address: ride.destination_address ?? '',
+        scheduledAt: ride.scheduled_at ?? '',
+        status: ride.status ?? 'unknown',
+        rideType: ride.ride_type ?? 'unknown',
       }));
     }
 

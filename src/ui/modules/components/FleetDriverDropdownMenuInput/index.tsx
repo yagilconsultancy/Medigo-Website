@@ -22,6 +22,16 @@ export interface FleetDriverInputData {
   rating: number;
 }
 
+type FleetDriverApiItem = {
+  user_id: string;
+  vehicle_make?: string | null;
+  vehicle_model?: string | null;
+  vehicle_year?: string | number | null;
+  vehicle_plate?: string | null;
+  vehicle_photo_url?: string | null;
+  rating?: number | null;
+};
+
 export interface FleetDriverDropdownMenuInputProps {
   fleetId?: string;
   handleDriverSelected: (driver: FleetDriverInputData) => void;
@@ -54,7 +64,7 @@ export const FleetDriverDropdownMenuInput = ({
   const driverList = useMemo<FleetDriverInputData[]>(() => {
     if (!driversData?.success || !driversData.data) return [];
 
-    return driversData.data
+    return (driversData.data as FleetDriverApiItem[])
       .map((driver) => {
         const vehicleInfo = [
           driver.vehicle_make,
