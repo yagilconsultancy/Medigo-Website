@@ -49,8 +49,10 @@ export const useResolvedApiQuery = <
   const queryResult = queryHook(...args);
   const { data: apiResponse, error, ...rest } = queryResult;
 
-  const resolvedData =
-    apiResponse && apiResponse.success ? apiResponse.data : defaultValue;
+  const resolvedData: Data =
+    apiResponse && apiResponse.success && apiResponse.data != null
+      ? apiResponse.data
+      : defaultValue;
 
   return {
     ...rest,

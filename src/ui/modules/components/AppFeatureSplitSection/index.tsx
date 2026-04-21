@@ -51,7 +51,7 @@ export function AppFeatureSplitSection({
     >
       <Box
         sx={{
-          maxWidth: 1240,
+          maxWidth: 1380,
           mx: 'auto',
         }}
       >

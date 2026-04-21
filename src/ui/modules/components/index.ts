@@ -21,6 +21,7 @@ export * from './AppAccordion';
 export * from './AppFeatureCard';
 export * from './AppHowItWorksStep';
 export * from './AppGradientHeroSection';
+export * from './AppHeroShowcaseSection';
 export * from './AppCoreValuesSection';
 export * from './AppRequirementCard';
 export * from './AppCtaBanner';

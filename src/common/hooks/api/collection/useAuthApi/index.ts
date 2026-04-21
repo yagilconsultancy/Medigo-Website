@@ -25,8 +25,15 @@ export const useAuthApi = () => {
         const responseData = response.data;
 
         if (responseData.success) {
-          const token = responseData.data.access_token;
-          const refreshToken = responseData.data.refresh_token;
+          const authData = responseData.data;
+
+          if (!authData) {
+            toast.error('An error occurred');
+            return;
+          }
+
+          const token = authData.access_token;
+          const refreshToken = authData.refresh_token;
 
           setAuthToken(token);
           setRefreshToken(refreshToken);
@@ -72,7 +79,14 @@ export const useAuthApi = () => {
         const responseData = response.data;
 
         if (responseData.success) {
-          const token = responseData.data.access_token;
+          const authData = responseData.data;
+
+          if (!authData) {
+            toast.error('An error occurred during token refresh');
+            return;
+          }
+
+          const token = authData.access_token;
 
           setAuthToken(token);
 
