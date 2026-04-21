@@ -93,11 +93,13 @@ export function AppHowItWorksStep({
         backgroundColor: 'transparent',
         border: '0.67px solid transparent',
         boxShadow: 'none',
+        transform: 'translateY(0)',
         transition:
           'background-color 300ms ease, box-shadow 180ms ease, transform 180ms ease, border-color 180ms ease',
         '&:hover, &:focus-within': {
           backgroundColor: '#FFFFFF',
           boxShadow: '0px 0px 2.8px 0px rgba(0,0,0,0.25)',
+          transform: 'translateY(-4px)',
         },
       }}
     >

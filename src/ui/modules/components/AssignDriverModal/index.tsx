@@ -26,6 +26,15 @@ type Driver = {
   rating: number;
 };
 
+type AvailableDriver = {
+  driver_id: string;
+  name: string;
+  vehicle_make?: string | null;
+  vehicle_model?: string | null;
+  vehicle_type?: string | null;
+  rating?: number | null;
+};
+
 type AssignDriverModalProps = {
   open: boolean;
   handleClose: () => void;
@@ -53,7 +62,11 @@ export const AssignDriverModal = ({
 
   // Fetch available drivers from API
   const { data: driversData, isLoading: isLoadingDrivers } =
-    useResolvedApiQuery(useGetAvailableDrivers, [], rideId);
+    useResolvedApiQuery<AvailableDriver[], unknown, [string]>(
+      useGetAvailableDrivers,
+      [] as AvailableDriver[],
+      rideId
+    );
 
   // Assign driver mutation
   const assignDriverMutation = useAssignDriverToBooking();

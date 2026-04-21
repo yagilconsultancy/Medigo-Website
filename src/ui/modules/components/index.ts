@@ -20,6 +20,7 @@ export * from './AppTab';
 export * from './AppAccordion';
 export * from './AppFeatureCard';
 export * from './AppHowItWorksStep';
+export * from './AppRevealOnScroll';
 export * from './AppGradientHeroSection';
 export * from './AppHeroShowcaseSection';
 export * from './AppCoreValuesSection';

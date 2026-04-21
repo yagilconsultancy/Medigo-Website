@@ -30,9 +30,15 @@ export function AppRequirementCard({
         borderRadius: '16px',
         border: `0.741px solid ${borderColor}`,
         backgroundImage,
+        transform: 'translateY(0)',
+        transition: 'transform 180ms ease, box-shadow 180ms ease',
         px: { xs: 2.5, sm: 3, md: 5 },
         pt: { xs: 3, sm: 3.5, md: 5 },
         pb: { xs: 3, sm: 3.5, md: 3.75 },
+        '&:hover, &:focus-within': {
+          transform: 'translateY(-4px)',
+          boxShadow: '0px 16px 30px rgba(59, 130, 246, 0.10)',
+        },
       }}
     >
       <Stack spacing={{ xs: 2.5, md: 3.5 }}>

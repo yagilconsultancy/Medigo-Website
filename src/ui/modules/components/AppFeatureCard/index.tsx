@@ -27,14 +27,16 @@ export function AppFeatureCard({
         width: '100%',
         border: '0.75px solid #F3F4F6',
         boxShadow: 'none',
+        transform: 'translateY(0)',
         transition:
-          'background-color 180ms ease, border-color 180ms ease, box-shadow 180ms ease',
+          'background-color 180ms ease, border-color 180ms ease, box-shadow 180ms ease, transform 180ms ease',
         px: { xs: 2.5, sm: 3, md: 3.75 },
         py: { xs: 2.5, sm: 3, md: 3.75 },
         '&:hover, &:focus-within': {
           backgroundColor: 'rgba(21,93,252,0.05)',
           borderColor: (theme) => theme.color.brandBlue,
           boxShadow: '0px 0px 4px 0px rgba(0,0,0,0.25)',
+          transform: 'translateY(-4px)',
           '& .app-feature-card-icon-wrap': {
             backgroundColor: (theme) => theme.color.brandBlue,
           },
