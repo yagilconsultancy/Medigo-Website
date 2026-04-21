@@ -21,7 +21,7 @@ import { pxToRem } from '../../../../common';
 
 const navItems = [
   { label: 'How It Works', href: '/how-it-works', section: 'how-it-works' },
-  { label: 'Partners', href: '/#partners', section: 'partners' },
+  { label: 'Partners', href: '/partners', section: 'partners' },
   { label: 'About', href: '/#about', section: 'about' },
   { label: 'Contact', href: '/#contact', section: 'contact' },
 ];

@@ -1,6 +1,5 @@
 'use client';
 
-import Image from 'next/image';
 import Link from 'next/link';
 import { Box, Grid, Stack, Typography } from '@mui/material';
 import { AppButton } from '../AppButton';
@@ -39,7 +38,7 @@ export function AppCtaBanner({
     >
       <Box
         sx={{
-          maxWidth: 1240,
+          maxWidth: 1380,
           mx: 'auto',
         }}
       >
