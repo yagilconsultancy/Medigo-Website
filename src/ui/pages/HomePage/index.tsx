@@ -5,6 +5,7 @@ import { Box, Stack, Typography } from '@mui/material';
 import { AppLayout } from '@/ui/modules/partials';
 import {
   AppButton,
+  AppAccordion,
   AppFeatureCard,
   AppFeatureSplitSection,
   AppHeroShowcaseSection,
@@ -43,7 +44,7 @@ import overflowImage from "./ui/assets/images/overflow-image.png";
 import support247Icon from '../../../ui/assets/icons/247-support.svg';
 import realTimeIcon from '../../../ui/assets/icons/real-time.svg';
 import coreCoordinationIcon from '../../../ui/assets/icons/core-cordination.svg';
-import { ReactNode } from 'react';
+import { ReactNode, useState } from 'react';
 
 type FeatureCardSection = {
   title: string;
@@ -134,6 +135,33 @@ const howItWorksSteps = [
     title: 'Track and Coordinate in Real Time',
     description:
       'Receive updates and maintain visibility from request to completion',
+  },
+] as const;
+
+const faqItems = [
+  {
+    id: 'what-is-medigo',
+    title: 'What is MediGO?',
+    description:
+      'MediGO is a platform that helps individuals and families arrange safe, comfortable, non-emergency medical transportation (NEMT). We coordinate with certified providers for appointments, treatments, and non-emergency medical needs with dignity and respect.',
+  },
+  {
+    id: 'request-transport',
+    title: 'How do I request transportation?',
+    description:
+      'You can submit a request by providing your pickup location, destination, schedule, and any specific mobility or assistance needs. Our team will coordinate a suitable, trained driver to ensure a smooth, comfortable journey.',
+  },
+  {
+    id: 'transport-types',
+    title: 'What types of transportation are available?',
+    description:
+      'We offer wheelchair-accessible vehicles, ambulatory transport, and specialized vehicles for stretcher transport. All vehicles are equipped for comfort, safety, and dignity.',
+  },
+  {
+    id: 'emergency-service',
+    title: 'Is this an emergency service?',
+    description:
+      'No. MediGO provides non-emergency medical transportation only. For emergencies, please call 911. We focus on scheduled medical appointments, treatments, and wellness trips that require professional, caring transport.',
   },
 ] as const;
 
@@ -290,6 +318,8 @@ const featureCardSections2: FeatureCardSectionConfig[] = [
 ];
 
 export const HomePage = () => {
+  const [expandedFaq, setExpandedFaq] = useState(faqItems[0].id);
+
   return (
     <AppLayout>
       <AppHeroShowcaseSection
@@ -1250,9 +1280,56 @@ export const HomePage = () => {
                   pointerEvents: 'none',
                   userSelect: 'none',
                 }}
-                />
+            />
             </Grid>
         </Grid>
+      </Box>
+
+      <Box
+        component="section"
+        sx={{
+          backgroundColor: (theme) => theme.color.faqSectionBackground,
+          px: { xs: 2, sm: 3, md: 4 },
+          py: { xs: 5, sm: 6, md: 8 },
+        }}
+      >
+        <Box
+          sx={{
+            maxWidth: 895,
+            mx: 'auto',
+          }}
+        >
+          <Stack spacing={{ xs: 3, md: 6 }}>
+            <Typography
+              component="h2"
+              sx={{
+                textAlign: 'center',
+                color: (theme) => theme.color.faqTitle,
+                fontSize: { xs: pxToRem(28), sm: pxToRem(32), md: pxToRem(36) },
+                lineHeight: 1.1,
+                fontWeight: 700,
+              }}
+            >
+              Frequently Asked Questions
+            </Typography>
+
+            <Stack spacing={{ xs: 2, md: 3 }}>
+              {faqItems.map((item) => (
+                <AppAccordion
+                  key={item.id}
+                  id={item.id}
+                  title={item.title}
+                  expanded={expandedFaq === item.id}
+                  onChange={(_, isExpanded) => {
+                    setExpandedFaq(isExpanded ? item.id : '');
+                  }}
+                >
+                  {item.description}
+                </AppAccordion>
+              ))}
+            </Stack>
+          </Stack>
+        </Box>
       </Box>
     </AppLayout>
   );

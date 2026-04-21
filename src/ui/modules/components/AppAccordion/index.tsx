@@ -8,7 +8,7 @@ import {
   Typography,
 } from '@mui/material';
 import { ExpandMore } from '@mui/icons-material';
-import { ReactNode } from 'react';
+import { ReactNode, SyntheticEvent } from 'react';
 import { pxToRem } from '../../../../common';
 
 type AppAccordionProps = {
@@ -16,6 +16,8 @@ type AppAccordionProps = {
   title: ReactNode;
   children: ReactNode;
   defaultExpanded?: boolean;
+  expanded?: boolean;
+  onChange?: (event: SyntheticEvent, expanded: boolean) => void;
   showExpandIcon?: boolean;
 };
 
@@ -24,11 +26,15 @@ export function AppAccordion({
   title,
   children,
   defaultExpanded = false,
-  showExpandIcon = false,
+  expanded,
+  onChange,
+  showExpandIcon = true,
 }: AppAccordionProps) {
   return (
     <Accordion
       defaultExpanded={defaultExpanded}
+      expanded={expanded}
+      onChange={onChange}
       disableGutters
       elevation={0}
       square
