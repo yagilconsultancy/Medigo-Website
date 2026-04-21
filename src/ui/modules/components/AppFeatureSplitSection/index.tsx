@@ -142,7 +142,7 @@ export function AppFeatureSplitSection({
                     fontSize: {
                       xs: pxToRem(16),
                       sm: pxToRem(17),
-                      md: pxToRem(20),
+                      lg: pxToRem(20),
                     },
                     lineHeight: 1.6,
                     fontWeight: 400,
