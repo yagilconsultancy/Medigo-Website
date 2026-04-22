@@ -109,63 +109,56 @@ export function AppCoreValuesSection({
         py: { xs: 6, sm: 7, md: 9 },
       }}
     >
-      <Box
-        sx={{
-          maxWidth: 1240,
-          mx: 'auto',
-        }}
-      >
-        <Stack spacing={{ xs: 3, md: 6 }}>
-          <Box>
-            <Typography
-              component="h2"
-              sx={{
-                textAlign: 'center',
-                color: (theme) => theme.color.faqTitle,
-                fontSize: {
-                  xs: pxToRem(28),
-                  sm: pxToRem(32),
-                  md: pxToRem(36),
-                },
-                lineHeight: 1.15,
-                fontWeight: 700,
-              }}
-            >
-              {title}
-            </Typography>
+      <Stack spacing={{ xs: 3, md: 6 }}>
+        <Box>
+          <Typography
+            component="h2"
+            sx={{
+              textAlign: 'center',
+              color: (theme) => theme.color.faqTitle,
+              fontSize: {
+                xs: pxToRem(28),
+                sm: pxToRem(32),
+                md: pxToRem(36),
+              },
+              lineHeight: 1.15,
+              fontWeight: 700,
+            }}
+          >
+            {title}
+          </Typography>
 
-            <Typography
-              sx={{
-                mt: { xs: 1.5, md: 2 },
-                textAlign: 'center',
-                color: (theme) => theme.color.faqText,
-                fontSize: {
-                  xs: pxToRem(15),
-                  sm: pxToRem(16),
-                  md: pxToRem(20),
-                },
-                lineHeight: 1.4,
-                fontWeight: 400,
-              }}
-            >
-              {subtitle}
-            </Typography>
-          </Box>
+          <Typography
+            sx={{
+              mt: { xs: 1.5, md: 2 },
+              textAlign: 'center',
+              color: (theme) => theme.color.faqText,
+              fontSize: {
+                xs: pxToRem(15),
+                sm: pxToRem(16),
+                md: pxToRem(20),
+              },
+              lineHeight: 1.4,
+              fontWeight: 400,
+            }}
+          >
+            {subtitle}
+          </Typography>
+        </Box>
 
-          <Grid container spacing={{ xs: 2, md: 2.5 }} alignItems="stretch">
-            {items.map((item) => (
-              <Grid key={item.title} size={{ xs: 12, md: 6 }}>
-                <CoreValueCard
-                  icon={item.icon}
-                  title={item.title}
-                  description={item.description}
-                  iconBackground={item.iconBackground}
-                />
-              </Grid>
-            ))}
-          </Grid>
-        </Stack>
-      </Box>
+        <Grid container spacing={{ xs: 2, md: 2.5 }} alignItems="stretch">
+          {items.map((item) => (
+            <Grid key={item.title} size={{ xs: 12, md: 6 }}>
+              <CoreValueCard
+                icon={item.icon}
+                title={item.title}
+                description={item.description}
+                iconBackground={item.iconBackground}
+              />
+            </Grid>
+          ))}
+        </Grid>
+      </Stack>
     </Box>
   );
 }

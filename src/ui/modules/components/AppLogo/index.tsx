@@ -16,8 +16,14 @@ export function AppLogo({ width = 200, height = 50 }: AppLogoProps = {}) {
         width={width}
         height={height}
         sx={{
-          width: '135px',
-          height: '74px',
+          width: {
+            xs: '100px',
+            md: '135px',
+          },
+          height: {
+            xs: '40px',
+            md: '74px',
+          },
         }}
       />
     </StyledLink>
