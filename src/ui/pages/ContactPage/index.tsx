@@ -498,14 +498,14 @@ export const ContactPage = () => {
       </AppRevealOnScroll>
       <AppRevealOnScroll>
         <AppCtaBanner
-        title="MediGo is redefining care mobility"
-        description="Join us in building a more accessible, reliable, and patient-centered future for healthcare transportation."
-        primaryActionLabel="Apply to Become a Partner"
-        secondaryActionLabel="Schedule a Consultation"
-        primaryActionHref="/#contact"
-        secondaryActionHref="/#contact"
+          title="MediGo is redefining care mobility"
+          description="Join us in building a more accessible, reliable, and patient-centered future for healthcare transportation."
+          primaryActionLabel="Apply to Become a Partner"
+          secondaryActionLabel="Schedule a Consultation"
+          primaryActionHref="/#contact"
+          secondaryActionHref="/#contact"
         />
-    </AppRevealOnScroll>
+      </AppRevealOnScroll>
     </AppLayout>
   );
 };

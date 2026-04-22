@@ -17,6 +17,7 @@ type AppGradientHeroSectionProps = {
   minHeight?: number;
   buttonLabel?: string;
   buttonHref?: string;
+  buttonOnClick?: () => void;
   buttonEndIcon?: ReactNode;
 };
 
@@ -30,6 +31,7 @@ export function AppGradientHeroSection({
   minHeight = 320,
   buttonLabel,
   buttonHref,
+  buttonOnClick,
   buttonEndIcon = <ChevronRightRounded />,
 }: AppGradientHeroSectionProps) {
   return (
@@ -152,11 +154,12 @@ export function AppGradientHeroSection({
           {subtitle}
         </Typography>
 
-        {buttonLabel && buttonHref ? (
+        {buttonLabel && (buttonHref || buttonOnClick) ? (
           <Box sx={{ pt: { xs: 0.5, md: 1 } }}>
             <AppButton
-              component={StyledLink}
+              component={buttonHref ? StyledLink : 'button'}
               href={buttonHref}
+              onClick={buttonOnClick}
               endIcon={buttonEndIcon}
               variant="contained"
               color="primary"

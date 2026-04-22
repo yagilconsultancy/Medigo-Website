@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import { useState } from 'react';
 import Grid from '@mui/material/Grid';
 import { Box, Stack, Typography } from '@mui/material';
 import {
@@ -20,6 +21,7 @@ import {
 } from '../../modules/components';
 import { pxToRem } from '../../../common';
 import whyPartnerImage from './ui/assets/images/why-partner.png';
+import { StartApplicationDrawer } from './ui/component';
 const averageOnboardingTimeIcon =
   'https://www.figma.com/api/mcp/asset/bbb11b97-0023-4b3c-94a9-9fdd3c041e8d';
 
@@ -134,6 +136,8 @@ const processItems = [
 ] as const;
 
 export const PartnerPage = () => {
+  const [isApplicationDrawerOpen, setIsApplicationDrawerOpen] = useState(false);
+
   return (
     <AppLayout>
       <AppRevealOnScroll>
@@ -149,7 +153,7 @@ export const PartnerPage = () => {
           showBlurCircles
           minHeight={540}
           buttonLabel="Start Your Application"
-          buttonHref="/#contact"
+          buttonOnClick={() => setIsApplicationDrawerOpen(true)}
         />
       </AppRevealOnScroll>
 
@@ -527,6 +531,11 @@ export const PartnerPage = () => {
           secondaryActionHref="/#contact"
         />
       </AppRevealOnScroll>
+
+      <StartApplicationDrawer
+        open={isApplicationDrawerOpen}
+        onClose={() => setIsApplicationDrawerOpen(false)}
+      />
     </AppLayout>
   );
 };
