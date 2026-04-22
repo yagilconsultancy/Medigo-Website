@@ -5,6 +5,7 @@ export * from './Loader';
 export * from './RowStack';
 export * from './StyledImage';
 export * from './StyledLink';
+export * from './AppLabel';
 export * from './TextField';
 export * from './AppLogo';
 export * from './HeroLabel';
