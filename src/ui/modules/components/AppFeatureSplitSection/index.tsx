@@ -2,7 +2,7 @@
 
 import Grid from '@mui/material/Grid';
 import { Box, Stack, Typography } from '@mui/material';
-import { ReactNode } from 'react';
+import { ReactNode, useEffect, useRef, useState } from 'react';
 import { AppButton } from '../AppButton';
 import { pxToRem } from '../../../../common';
 
@@ -40,13 +40,60 @@ export function AppFeatureSplitSection({
   mobileReverse = false,
   backgroundColor = '#FFFFFF',
 }: AppFeatureSplitSectionProps) {
+  const rootRef = useRef<HTMLDivElement | null>(null);
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const element = rootRef.current;
+    if (!element) return;
+
+    const reducedMotion = window.matchMedia(
+      '(prefers-reduced-motion: reduce)'
+    ).matches;
+
+    if (reducedMotion) {
+      setIsVisible(true);
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.unobserve(entry.target);
+        }
+      },
+      {
+        threshold: 0.2,
+        rootMargin: '0px 0px -10% 0px',
+      }
+    );
+
+    observer.observe(element);
+    return () => observer.disconnect();
+  }, []);
+
+  const transitionBase = {
+    transition: 'opacity 500ms ease, transform 500ms ease',
+    willChange: 'opacity, transform',
+  } as const;
+
+  const delayed = (delay: number) => ({
+    transitionDelay: isVisible ? `${delay}ms` : '0ms',
+  });
+
   return (
     <Box
+      ref={rootRef}
       component="section"
       sx={{
         backgroundColor,
         px: { xs: 2, sm: 3, md: 4 },
         py: { xs: 6, sm: 7, md: 9 },
+        opacity: isVisible ? 1 : 0,
+        transform: isVisible ? 'translateY(0)' : 'translateY(22px)',
+        transition: 'opacity 650ms ease, transform 650ms ease',
+        willChange: 'opacity, transform',
       }}
     >
       <Box
@@ -70,6 +117,10 @@ export function AppFeatureSplitSection({
                 <Typography
                   component="p"
                   sx={{
+                    opacity: isVisible ? 1 : 0,
+                    transform: isVisible ? 'translateY(0)' : 'translateY(14px)',
+                    ...transitionBase,
+                    ...delayed(0),
                     color: (theme) => theme.color.brandBlue,
                     fontSize: pxToRem(14),
                     lineHeight: 1.5,
@@ -86,6 +137,12 @@ export function AppFeatureSplitSection({
                 direction="row"
                 spacing={1.5}
                 alignItems={{ xs: 'flex-start', md: 'center' }}
+                sx={{
+                  opacity: isVisible ? 1 : 0,
+                  transform: isVisible ? 'translateY(0)' : 'translateY(14px)',
+                  ...transitionBase,
+                  ...delayed(90),
+                }}
               >
                 {step ? (
                   <Box
@@ -138,6 +195,10 @@ export function AppFeatureSplitSection({
               {description ? (
                 <Typography
                   sx={{
+                    opacity: isVisible ? 1 : 0,
+                    transform: isVisible ? 'translateY(0)' : 'translateY(14px)',
+                    ...transitionBase,
+                    ...delayed(160),
                     color: (theme) => theme.color.faqText,
                     fontSize: {
                       xs: pxToRem(16),
@@ -154,12 +215,20 @@ export function AppFeatureSplitSection({
               ) : null}
 
               <Stack spacing={{ xs: 2, md: 3 }}>
-                {features.map((feature) => (
+                {features.map((feature, index) => (
                   <Stack
                     key={feature.title}
                     direction="row"
                     spacing={{ xs: 1.5, md: 2 }}
                     alignItems="flex-start"
+                    sx={{
+                      opacity: isVisible ? 1 : 0,
+                      transform: isVisible
+                        ? 'translateY(0)'
+                        : 'translateY(14px)',
+                      ...transitionBase,
+                      ...delayed(220 + index * 120),
+                    }}
                   >
                     <Box
                       sx={{
@@ -216,6 +285,10 @@ export function AppFeatureSplitSection({
                   href={buttonHref}
                   variant="contained"
                   sx={{
+                    opacity: isVisible ? 1 : 0,
+                    transform: isVisible ? 'translateY(0)' : 'translateY(14px)',
+                    ...transitionBase,
+                    ...delayed(220 + features.length * 120 + 80),
                     minWidth: { xs: 160, md: 184 },
                     height: { xs: 48, md: 52 },
                     borderRadius: '9999px',
@@ -237,7 +310,17 @@ export function AppFeatureSplitSection({
             </Stack>
           </Grid>
 
-          <Grid size={{ xs: 12, md: 6 }}>{media}</Grid>
+          <Grid
+            size={{ xs: 12, md: 6 }}
+            sx={{
+              opacity: isVisible ? 1 : 0,
+              transform: isVisible ? 'translateY(0)' : 'translateY(22px)',
+              ...transitionBase,
+              ...delayed(150),
+            }}
+          >
+            {media}
+          </Grid>
         </Grid>
       </Box>
     </Box>

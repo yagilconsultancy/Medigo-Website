@@ -26,7 +26,7 @@ const socialLinks = [
   { label: 'Facebook', href: '#', icon: Facebook },
   { label: 'Twitter', href: '#', icon: Twitter },
   { label: 'LinkedIn', href: '#', icon: LinkedIn },
-  { label: 'Email', href: 'mailto:contact@medigo.ca', icon: MailOutline },
+  { label: 'Email', href: 'mailto:info@getmedigo.com', icon: MailOutline },
 ];
 
 export function AppFooter() {
@@ -165,7 +165,7 @@ export function AppFooter() {
               </RowStack>
 
               <StyledLink
-                href="mailto:contact@medigo.ca"
+                href="mailto:info@getmedigo.com"
                 sx={{
                   color: (theme) => theme.color.footerText,
                   fontSize: { xs: pxToRem(13), sm: pxToRem(14) },
@@ -176,7 +176,7 @@ export function AppFooter() {
                   },
                 }}
               >
-                contact@medigo.ca
+                info@getmedigo.com
               </StyledLink>
             </Stack>
           </Grid>

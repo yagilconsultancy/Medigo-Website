@@ -10,9 +10,12 @@ import {
   VerifiedOutlined,
 } from '@mui/icons-material';
 import gsap from 'gsap';
+import ScrollTrigger from 'gsap/ScrollTrigger';
 import { pxToRem } from '../../../../common';
 import { AppButton } from '../AppButton';
 import { StyledLink } from '../StyledLink';
+
+gsap.registerPlugin(ScrollTrigger);
 
 type HeroPillProps = {
   label: string;
@@ -40,6 +43,9 @@ export type AppHeroShowcaseSectionProps = {
   bottomPill?: HeroPillProps;
   featureChips: HeroChipProps[];
   bottomStripText: string;
+  enableEntranceAnimation?: boolean;
+  enableParallax?: boolean;
+  enablePin?: boolean;
 };
 
 function StatPill({ label, value, icon }: HeroPillProps) {
@@ -142,13 +148,36 @@ export function AppHeroShowcaseSection({
   bottomPill,
   featureChips,
   bottomStripText,
+  enableEntranceAnimation = true,
+  enableParallax = false,
+  enablePin = false,
 }: AppHeroShowcaseSectionProps) {
+  const rootRef = useRef<HTMLDivElement | null>(null);
   const topPillRef = useRef<HTMLDivElement | null>(null);
   const bottomPillRef = useRef<HTMLDivElement | null>(null);
   const tickerTrackRef = useRef<HTMLSpanElement | null>(null);
 
   useEffect(() => {
+    const root = rootRef.current;
+    const reducedMotion = window.matchMedia(
+      '(prefers-reduced-motion: reduce)'
+    ).matches;
+
     const tweens: gsap.core.Tween[] = [];
+    const triggers: ScrollTrigger[] = [];
+
+    if (root && reducedMotion) {
+      const visibleTargets = root.querySelectorAll<HTMLElement>(
+        '[data-hero-entrance], [data-hero-title-line], [data-hero-image="true"], [data-hero-top-pill="true"], [data-hero-bottom-pill="true"]'
+      );
+      gsap.set(visibleTargets, {
+        autoAlpha: 1,
+        x: 0,
+        y: 0,
+        scale: 1,
+      });
+      return () => undefined;
+    }
 
     if (topPillRef.current) {
       tweens.push(
@@ -174,6 +203,149 @@ export function AppHeroShowcaseSection({
       );
     }
 
+    if (enableEntranceAnimation && root && !reducedMotion) {
+      const revealTargets = root.querySelectorAll<HTMLElement>(
+        '[data-hero-entrance]'
+      );
+      const titleLines = root.querySelectorAll<HTMLElement>(
+        '[data-hero-title-line]'
+      );
+      const image = root.querySelector<HTMLElement>('[data-hero-image="true"]');
+      const topPill = root.querySelector<HTMLElement>(
+        '[data-hero-top-pill="true"]'
+      );
+      const bottomPill = root.querySelector<HTMLElement>(
+        '[data-hero-bottom-pill="true"]'
+      );
+
+      gsap.set(revealTargets, { autoAlpha: 0, y: 24 });
+      if (image) {
+        gsap.set(image, { autoAlpha: 0, x: 32, scale: 0.985 });
+      }
+      if (topPill) {
+        gsap.set(topPill, { autoAlpha: 0, y: 16, scale: 0.98 });
+      }
+      if (bottomPill) {
+        gsap.set(bottomPill, { autoAlpha: 0, y: 16, scale: 0.98 });
+      }
+
+      const tl = gsap.timeline({ delay: 0.5 });
+      tl.to('[data-hero-entrance="badge"]', {
+        autoAlpha: 1,
+        y: 0,
+        duration: 0.6,
+        ease: 'power3.out',
+      })
+        .to(
+          titleLines,
+          {
+            autoAlpha: 1,
+            y: 0,
+            duration: 0.7,
+            stagger: 0.12,
+            ease: 'power3.out',
+          },
+          '-=0.15'
+        )
+        .to(
+          '[data-hero-entrance="subtitle"]',
+          {
+            autoAlpha: 1,
+            y: 0,
+            duration: 0.65,
+            ease: 'power3.out',
+          },
+          '-=0.2'
+        )
+        .to(
+          '[data-hero-entrance="actions"]',
+          {
+            autoAlpha: 1,
+            y: 0,
+            duration: 0.65,
+            ease: 'power3.out',
+            stagger: 0.08,
+          },
+          '-=0.18'
+        )
+        .to(
+          '[data-hero-entrance="chips"]',
+          {
+            autoAlpha: 1,
+            y: 0,
+            duration: 0.55,
+            ease: 'power3.out',
+            stagger: 0.06,
+          },
+          '-=0.08'
+        )
+        .to(
+          image,
+          {
+            autoAlpha: 1,
+            x: 0,
+            scale: 1,
+            duration: 0.9,
+            ease: 'power3.out',
+          },
+          '-=0.9'
+        )
+        .to(
+          topPill,
+          {
+            autoAlpha: 1,
+            y: 0,
+            scale: 1,
+            duration: 0.65,
+            ease: 'power3.out',
+          },
+          '-=0.7'
+        )
+        .to(
+          bottomPill,
+          {
+            autoAlpha: 1,
+            y: 0,
+            scale: 1,
+            duration: 0.65,
+            ease: 'power3.out',
+          },
+          '-=0.65'
+        );
+
+      if (enableParallax && image) {
+        triggers.push(
+          ScrollTrigger.create({
+            trigger: root,
+            start: 'top top',
+            end: 'bottom top',
+            scrub: true,
+            invalidateOnRefresh: true,
+            onUpdate: (self) => {
+              gsap.set(image, { y: self.progress * 24 });
+            },
+          })
+        );
+      }
+
+      if (
+        enablePin &&
+        window.matchMedia('(min-width: 900px)').matches
+      ) {
+        triggers.push(
+          ScrollTrigger.create({
+            trigger: root,
+            start: 'top top',
+            end: '+=180%',
+            pin: true,
+            pinSpacing: true,
+            anticipatePin: 1,
+            invalidateOnRefresh: true,
+          })
+        );
+      }
+    }
+
     if (tickerTrackRef.current) {
       tweens.push(
         gsap.fromTo(
@@ -194,11 +366,13 @@ export function AppHeroShowcaseSection({
 
     return () => {
       tweens.forEach((tween) => tween.kill());
+      triggers.forEach((trigger) => trigger.kill());
     };
-  }, []);
+  }, [enableEntranceAnimation, enableParallax, enablePin]);
 
   return (
     <Box
+      ref={rootRef}
       component="section"
       sx={{
         position: 'relative',
@@ -222,6 +396,7 @@ export function AppHeroShowcaseSection({
             <Stack spacing={{ xs: 1.5, md: 2.25 }}>
               {badgeLabel ? (
                 <Box
+                  data-hero-entrance="badge"
                   sx={{
                     display: 'inline-flex',
                     alignSelf: 'flex-start',
@@ -263,8 +438,11 @@ export function AppHeroShowcaseSection({
                 {titleLines.map((line, index) => (
                   <Box
                     key={`${line}-${index}`}
+                    data-hero-title-line
                     component="span"
                     sx={{
+                      opacity: 0,
+                      transform: 'translateY(24px)',
                       display: 'block',
                       color:
                         titleHighlightLineIndices.includes(index) ||
@@ -282,7 +460,10 @@ export function AppHeroShowcaseSection({
               </Typography>
 
               <Typography
+                data-hero-entrance="subtitle"
                 sx={{
+                  opacity: 0,
+                  transform: 'translateY(24px)',
                   color: (theme) => theme.color.faqText,
                   fontSize: {
                     xs: pxToRem(16),
@@ -298,9 +479,14 @@ export function AppHeroShowcaseSection({
               </Typography>
 
               <Stack
+                data-hero-entrance="actions"
                 direction={{ xs: 'column', sm: 'row' }}
                 spacing={{ xs: 1.5, md: 2 }}
-                sx={{ pt: { xs: 0.5, md: 1 } }}
+                sx={{
+                  pt: { xs: 0.5, md: 1 },
+                  opacity: 0,
+                  transform: 'translateY(24px)',
+                }}
               >
                 <AppButton
                   component={StyledLink}
@@ -352,10 +538,15 @@ export function AppHeroShowcaseSection({
               </Stack>
 
               <Stack
+                data-hero-entrance="chips"
                 direction="row"
                 spacing={{ xs: 1.5, md: 2.5 }}
                 flexWrap="wrap"
-                sx={{ pt: { xs: 0.5, md: 0.75 } }}
+                sx={{
+                  pt: { xs: 0.5, md: 0.75 },
+                  opacity: 0,
+                  transform: 'translateY(24px)',
+                }}
               >
                 {featureChips.map((chip) => (
                   <FeatureChip key={chip.label} label={chip.label} />
@@ -366,11 +557,14 @@ export function AppHeroShowcaseSection({
 
           <Grid size={{ xs: 12, md: 5.8 }}>
             <Box
+              data-hero-image="true"
               sx={{
                 position: 'relative',
                 maxWidth: 592,
                 mx: { xs: 'auto', md: 0 },
                 minHeight: { xs: 360, sm: 430, md: 500 },
+                opacity: 0,
+                transform: 'translateX(32px) scale(0.985)',
               }}
             >
               <Box
@@ -396,11 +590,14 @@ export function AppHeroShowcaseSection({
               {topPill ? (
                 <Box
                   ref={topPillRef}
+                  data-hero-top-pill="true"
                   sx={{
                     position: 'absolute',
                     right: { xs: 12, md: -10 },
                     top: { xs: 12, md: -20 },
                     zIndex: 2,
+                    opacity: 0,
+                    transform: 'translateY(16px) scale(0.98)',
                   }}
                 >
                   <StatPill
@@ -414,11 +611,14 @@ export function AppHeroShowcaseSection({
               {bottomPill ? (
                 <Box
                   ref={bottomPillRef}
+                  data-hero-bottom-pill="true"
                   sx={{
                     position: 'absolute',
                     left: { xs: 12, md: -24 },
                     bottom: { xs: 12, md: -18 },
                     zIndex: 2,
+                    opacity: 0,
+                    transform: 'translateY(16px) scale(0.98)',
                   }}
                 >
                   <Box

@@ -34,7 +34,7 @@ import overflowImage from './ui/assets/images/overflow-image.png';
 import support247Icon from '../../../ui/assets/icons/247-support.svg';
 import realTimeIcon from '../../../ui/assets/icons/real-time.svg';
 import coreCoordinationIcon from '../../../ui/assets/icons/core-cordination.svg';
-import { ReactNode, useState } from 'react';
+import { ReactNode, useEffect, useRef, useState } from 'react';
 
 type FeatureCardSection = {
   title: string;
@@ -327,51 +327,133 @@ export const HomePage = () => {
   const [expandedFaq, setExpandedFaq] = useState<
     (typeof faqItems)[number]['id'] | ''
   >(faqItems[0].id);
+  const commitmentHeadingRef = useRef<HTMLHeadingElement | null>(null);
+  const [isCommitmentHeadingVisible, setIsCommitmentHeadingVisible] =
+    useState(false);
+  const bookRideSectionRef = useRef<HTMLDivElement | null>(null);
+  const [isBookRideVisible, setIsBookRideVisible] = useState(false);
+  const commitmentHeadingText =
+    "Building the nation's most reliable medical transport network";
+
+  useEffect(() => {
+    const element = commitmentHeadingRef.current;
+    if (!element) return;
+
+    const reducedMotion = window.matchMedia(
+      '(prefers-reduced-motion: reduce)'
+    ).matches;
+
+    if (reducedMotion) {
+      setIsCommitmentHeadingVisible(true);
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsCommitmentHeadingVisible(true);
+          observer.unobserve(entry.target);
+        }
+      },
+      {
+        threshold: 0.35,
+        rootMargin: '0px 0px -12% 0px',
+      }
+    );
+
+    observer.observe(element);
+
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    const element = bookRideSectionRef.current;
+    if (!element) return;
+
+    const reducedMotion = window.matchMedia(
+      '(prefers-reduced-motion: reduce)'
+    ).matches;
+
+    if (reducedMotion) {
+      setIsBookRideVisible(true);
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsBookRideVisible(true);
+          observer.unobserve(entry.target);
+        }
+      },
+      {
+        threshold: 0.2,
+        rootMargin: '0px 0px -12% 0px',
+      }
+    );
+
+    observer.observe(element);
+
+    return () => observer.disconnect();
+  }, []);
+
+  const bookRideRevealStyle = (delay: number, xOffset = 0) => ({
+    opacity: isBookRideVisible ? 1 : 0,
+    transform: isBookRideVisible
+      ? 'translate(0, 0)'
+      : `translate(${xOffset}px, 18px)`,
+    transition: 'opacity 650ms ease, transform 650ms ease',
+    transitionDelay: isBookRideVisible ? `${delay}ms` : '0ms',
+    willChange: 'opacity, transform',
+  });
 
   return (
     <AppLayout>
-      <AppRevealOnScroll delay={0} distance={24}>
-        <AppHeroShowcaseSection
-          badgeLabel="Trusted Medical Transportation"
-          titleLines={[
-            'MediGo, Simplifies',
-            'Non-Emergency Medical',
-            'Transportation',
-            'Coordination',
-          ]}
-          titleHighlightLineIndices={[2, 3]}
-          subtitle="We provide structured, reliable non-emergency medical transportation (NEMT) solutions that goes beyond traditional rideshare services. Our certified network ensures safe, coordinated mobility for healthcare access and daily living."
-          image={heroImage}
-          imageAlt="Wheelchair accessible medical transport vehicle"
-          primaryActionLabel="Schedule a Ride"
-          primaryActionHref="/#contact"
-          secondaryActionLabel="Join Network"
-          secondaryActionHref="/#contact"
-          topPill={{
-            label: 'On-Time Rate',
-            value: '98%',
-            icon: <AccessTimeOutlined />,
-          }}
-          bottomPill={{
-            label: '100% Accessible',
-            value: 'Wheelchair-friendly',
-            icon: <CheckCircleOutline />,
-          }}
-          featureChips={[
-            { label: 'PHIPA Compliant' },
-            { label: 'Fully Insured' },
-            { label: 'Background Verified' },
-          ]}
-          bottomStripText="We are not a rideshare service. | We are structured Non-Emergency Medical Transportation (NEMT) infrastructure."
-        />
-      </AppRevealOnScroll>
+      <AppHeroShowcaseSection
+        badgeLabel="Trusted Medical Transportation"
+        titleLines={[
+          'MediGo, Simplifies',
+          'Non-Emergency Medical',
+          'Transportation',
+          'Coordination',
+        ]}
+        titleHighlightLineIndices={[2, 3]}
+        subtitle="We provide structured, reliable non-emergency medical transportation (NEMT) solutions that goes beyond traditional rideshare services. Our certified network ensures safe, coordinated mobility for healthcare access and daily living."
+        image={heroImage}
+        imageAlt="Wheelchair accessible medical transport vehicle"
+        primaryActionLabel="Schedule a Ride"
+        primaryActionHref="/#contact"
+        secondaryActionLabel="Join Network"
+        secondaryActionHref="/#contact"
+        topPill={{
+          label: 'On-Time Rate',
+          value: '98%',
+          icon: <AccessTimeOutlined />,
+        }}
+        bottomPill={{
+          label: '100% Accessible',
+          value: 'Wheelchair-friendly',
+          icon: <CheckCircleOutline />,
+        }}
+        featureChips={[
+          { label: 'PHIPA Compliant' },
+          { label: 'Fully Insured' },
+          { label: 'Background Verified' },
+        ]}
+        bottomStripText="We are not a rideshare service. | We are structured Non-Emergency Medical Transportation (NEMT) infrastructure."
+        enableEntranceAnimation
+        enablePin
+      />
 
-      {featureCardSections.map((section) => (
+      {featureCardSections.map((section, index) => (
         <Box
           key={section.title}
           component="section"
           sx={{
             backgroundColor: (theme) => theme.palette.background.default,
+            // position: 'relative',
+            // zIndex: 2,
+            // mt: index === 0 ? { xs: 0, md: -16 } : 0,
             px: { xs: 2, sm: 3, md: 4 },
             py: { xs: 5.5, sm: 6.5, md: 9 },
           }}
@@ -560,24 +642,23 @@ export const HomePage = () => {
         </Box>
       </Box>
       {featureSections.map((section, index) => (
-        <AppRevealOnScroll key={section.title} delay={index * 90} distance={20}>
-          <AppFeatureSplitSection
-            step={section.step}
-            eyebrow={section.eyebrow}
-            title={section.title}
-            description={section.description}
-            features={[...section.features]}
-            buttonLabel={section.buttonLabel}
-            buttonHref={section.buttonHref}
-            media={section.media}
-            reverse={section.reverse}
-            mobileReverse={section.mobileReverse}
-            backgroundColor={section.backgroundColor}
-          />
-        </AppRevealOnScroll>
+        <AppFeatureSplitSection
+          key={section.title}
+          step={section.step}
+          eyebrow={section.eyebrow}
+          title={section.title}
+          description={section.description}
+          features={[...section.features]}
+          buttonLabel={section.buttonLabel}
+          buttonHref={section.buttonHref}
+          media={section.media}
+          reverse={section.reverse}
+          mobileReverse={section.mobileReverse}
+          backgroundColor={section.backgroundColor}
+        />
       ))}
       {featureCardSections2.map((section, index) => (
-        <AppRevealOnScroll key={section.title} delay={index * 90} distance={20}>
+        <AppRevealOnScroll key={section.title} delay={300} distance={20}>
           <Box
             component="section"
             sx={{
@@ -675,7 +756,7 @@ export const HomePage = () => {
           </Box>
         </AppRevealOnScroll>
       ))}
-      <AppRevealOnScroll delay={120} distance={20}>
+      <AppRevealOnScroll delay={300} distance={20}>
         <Box
           component="section"
           sx={{
@@ -946,7 +1027,7 @@ export const HomePage = () => {
           </Box>
         </Box>
       </AppRevealOnScroll>
-      <AppRevealOnScroll delay={180} distance={20}>
+      <AppRevealOnScroll delay={300} distance={20}>
         <Box
           component="section"
           sx={{
@@ -992,9 +1073,9 @@ export const HomePage = () => {
 
               <Typography
                 component="h2"
+                ref={commitmentHeadingRef}
                 sx={{
                   textAlign: 'center',
-                  color: (theme) => theme.color.brandBlue,
                   fontSize: {
                     xs: pxToRem(32),
                     sm: pxToRem(44),
@@ -1002,11 +1083,39 @@ export const HomePage = () => {
                   },
                   lineHeight: 1,
                   fontWeight: 700,
-                  maxWidth: 900,
+                  maxWidth: 760,
                 }}
               >
-                Building the nation&apos;s most reliable medical transport
-                network
+                <Box
+                  component="span"
+                  sx={{
+                    display: 'inline',
+                  }}
+                >
+                  {commitmentHeadingText.split('').map((char, index) => {
+                    const isSpace = char === ' ';
+                    return (
+                      <Box
+                        component="span"
+                        key={`${char}-${index}`}
+                        sx={{
+                          display: 'inline-block',
+                          whiteSpace: 'pre',
+                          color: isCommitmentHeadingVisible
+                            ? (theme) => theme.color.brandBlue
+                            : 'rgba(239, 246, 255, 0.5)',
+                          transition: 'color 220ms ease',
+                          transitionDelay: isCommitmentHeadingVisible
+                            ? `${index * 70}ms`
+                            : '0ms',
+                          minWidth: isSpace ? '0.28em' : 'auto',
+                        }}
+                      >
+                        {isSpace ? '\u00A0' : char}
+                      </Box>
+                    );
+                  })}
+                </Box>
               </Typography>
 
               <Box
@@ -1081,18 +1190,18 @@ export const HomePage = () => {
         </Box>
       </AppRevealOnScroll>
 
-      <AppRevealOnScroll delay={240} distance={20}>
-        <Box
-          component="section"
-          sx={{
-            position: 'relative',
-            overflow: 'hidden',
-            backgroundImage:
-              'linear-gradient(159.68852709271874deg, rgb(67, 45, 215) 0%, rgb(20, 71, 230) 50%, rgb(21, 93, 252) 100%)',
-            px: { xs: 2, sm: 3, md: 4, lg: '117px' },
-            py: { xs: 4, md: 0 },
-          }}
-        >
+      <Box
+        ref={bookRideSectionRef}
+        component="section"
+        sx={{
+          position: 'relative',
+          overflow: 'hidden',
+          backgroundImage:
+            'linear-gradient(159.68852709271874deg, rgb(67, 45, 215) 0%, rgb(20, 71, 230) 50%, rgb(21, 93, 252) 100%)',
+          px: { xs: 2, sm: 3, md: 4, lg: '117px' },
+          py: { xs: 4, md: 0 },
+        }}
+      >
           <Grid
             container
             alignItems="center"
@@ -1115,6 +1224,7 @@ export const HomePage = () => {
                 <Typography
                   component="h2"
                   sx={{
+                    ...bookRideRevealStyle(0),
                     fontSize: {
                       xs: pxToRem(28),
                       sm: pxToRem(36),
@@ -1130,6 +1240,7 @@ export const HomePage = () => {
 
                 <Typography
                   sx={{
+                    ...bookRideRevealStyle(120),
                     color: '#BEDBFF',
                     fontSize: {
                       xs: pxToRem(16),
@@ -1149,6 +1260,7 @@ export const HomePage = () => {
                 <Box sx={{ pt: { xs: 1, md: 1.5 } }}>
                   <Typography
                     sx={{
+                      ...bookRideRevealStyle(220),
                       color: '#FFFFFF',
                       fontSize: {
                         xs: pxToRem(15),
@@ -1161,7 +1273,11 @@ export const HomePage = () => {
                   </Typography>
                 </Box>
 
-                <Stack direction="row" spacing={1.5}>
+                <Stack
+                  direction="row"
+                  spacing={1.5}
+                  sx={bookRideRevealStyle(300)}
+                >
                   <Box
                     component="a"
                     href="#"
@@ -1284,6 +1400,7 @@ export const HomePage = () => {
                 height: { xs: 250, md: 533 },
                 alignItems: { xs: 'center', md: 'flex-end' },
                 overflow: 'hidden',
+                ...bookRideRevealStyle(520, 42),
               }}
             >
               <StyledImage
@@ -1303,7 +1420,6 @@ export const HomePage = () => {
             </Grid>
           </Grid>
         </Box>
-      </AppRevealOnScroll>
 
       <AppRevealOnScroll delay={300} distance={20}>
         <Box

@@ -306,7 +306,7 @@ export const StartApplicationDrawer = ({
       open={open}
       onClose={onClose}
       showCloseButton={false}
-      paperSx={{ 
+      paperSx={{
         backgroundColor: '#F9FAFB',
         // px: { xs: 2, sm: 3, md: 4 },
         // pb: { xs: 8, md: 10 },
@@ -316,7 +316,7 @@ export const StartApplicationDrawer = ({
         sx={{
           minHeight: '100%',
           px: { xs: 2, sm: 3, md: 4 },
-        //   pb: { xs: 8, md: 10 },
+          //   pb: { xs: 8, md: 10 },
         }}
       >
         <Box
@@ -1143,7 +1143,7 @@ export const StartApplicationDrawer = ({
           </Stack>
         </Box>
       </Box>
-      <Box sx={{ height: { xs: "50px", md: "70px" } }}></Box>
+      <Box sx={{ height: { xs: '50px', md: '70px' } }}></Box>
     </AppFullPageModal>
   );
 };

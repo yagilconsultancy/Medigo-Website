@@ -32,6 +32,41 @@ export function AppHeader() {
   const pathname = usePathname();
 
   const closeDrawer = () => setOpen(false);
+  const isActiveNavItem = (item: (typeof navItems)[number]) =>
+    pathname === item.href ||
+    (pathname === '/' && activeSection === item.section);
+
+  const navLinkStyles = (isActive: boolean) => ({
+    position: 'relative',
+    display: 'inline-flex',
+    alignItems: 'center',
+    textDecoration: 'none',
+    color: (theme: any) =>
+      isActive ? theme.color.brandBlue : theme.color.navText,
+    fontSize: pxToRem(16),
+    fontWeight: isActive ? 500 : 400,
+    lineHeight: 1.5,
+    transition: 'color 180ms ease, font-weight 180ms ease',
+    '&:hover': {
+      color: (theme: any) => theme.color.brandBlue,
+      fontWeight: 500,
+      '&::after': {
+        transform: 'scaleX(1)',
+      },
+    },
+    '&::after': {
+      content: '""',
+      position: 'absolute',
+      left: 0,
+      bottom: '-4px',
+      width: '100%',
+      height: '2px',
+      backgroundColor: (theme: any) => theme.color.brandBlue,
+      transform: isActive ? 'scaleX(1)' : 'scaleX(0)',
+      transformOrigin: 'left center',
+      transition: 'transform 220ms ease',
+    },
+  });
 
   useEffect(() => {
     if (pathname !== '/') {
@@ -120,42 +155,7 @@ export function AppHeader() {
                 component={Link}
                 href={item.href}
                 onClick={() => setActiveSection(item.section)}
-                sx={{
-                  position: 'relative',
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  textDecoration: 'none',
-                  color: (theme) =>
-                    activeSection === item.section
-                      ? theme.color.brandBlue
-                      : theme.color.navText,
-                  fontSize: pxToRem(16),
-                  fontWeight: activeSection === item.section ? 500 : 400,
-                  lineHeight: 1.5,
-                  transition: 'color 180ms ease, font-weight 180ms ease',
-                  '&:hover': {
-                    color: (theme) => theme.color.brandBlue,
-                    fontWeight: 500,
-                    '&::after': {
-                      transform: 'scaleX(1)',
-                    },
-                  },
-                  '&::after': {
-                    content: '""',
-                    position: 'absolute',
-                    left: 0,
-                    bottom: '-4px',
-                    width: '100%',
-                    height: '2px',
-                    backgroundColor: (theme) => theme.color.brandBlue,
-                    transform:
-                      activeSection === item.section
-                        ? 'scaleX(1)'
-                        : 'scaleX(0)',
-                    transformOrigin: 'left center',
-                    transition: 'transform 220ms ease',
-                  },
-                }}
+                sx={navLinkStyles(isActiveNavItem(item))}
               >
                 <Typography
                   component="span"
@@ -258,9 +258,32 @@ export function AppHeader() {
                   py: 1.25,
                   justifyContent: 'center',
                   textAlign: 'center',
+                  position: 'relative',
+                  color: isActiveNavItem(item)
+                    ? (theme) => theme.color.brandBlue
+                    : (theme) => theme.color.black,
+                  '&::after': {
+                    content: '""',
+                    position: 'absolute',
+                    left: '50%',
+                    bottom: 4,
+                    width: 'fit-content',
+                    minWidth: '56px',
+                    height: '2px',
+                    backgroundColor: (theme) => theme.color.brandBlue,
+                    transform: isActiveNavItem(item)
+                      ? 'translateX(-50%) scaleX(1)'
+                      : 'translateX(-50%) scaleX(0)',
+                    transformOrigin: 'center',
+                    transition: 'transform 220ms ease',
+                  },
                   '&:hover': {
                     backgroundColor: (theme) =>
                       alpha(theme.color.brandBlue, 0.06),
+                    color: (theme) => theme.color.brandBlue,
+                    '&::after': {
+                      transform: 'translateX(-50%) scaleX(1)',
+                    },
                   },
                 }}
               >
@@ -269,9 +292,9 @@ export function AppHeader() {
                   primaryTypographyProps={{
                     sx: {
                       fontSize: pxToRem(16),
-                      fontWeight: activeSection === item.section ? 500 : 400,
+                      fontWeight: isActiveNavItem(item) ? 500 : 400,
                       color: (theme) =>
-                        activeSection === item.section
+                        isActiveNavItem(item)
                           ? theme.color.brandBlue
                           : theme.color.black,
                     },
