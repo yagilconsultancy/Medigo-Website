@@ -10,6 +10,7 @@ import {
   ShieldOutlined,
   VerifiedOutlined,
 } from '@mui/icons-material';
+import { useRouter } from 'next/navigation';
 import { Box, Stack } from '@mui/material';
 import { AppLayout } from '@/ui/modules/partials';
 import {
@@ -89,6 +90,8 @@ const featureCardSections = [
 ] as const;
 
 export function HowItWorksPage() {
+  const router = useRouter();
+
   return (
     <AppLayout>
       <AppRevealOnScroll>
@@ -132,6 +135,7 @@ export function HowItWorksPage() {
           ]}
           buttonLabel="Become a Partner"
           buttonHref="/#contact"
+          buttonOnClick={() => router.push('/partners')}
           backgroundColor="#FFFFFF"
           media={
             <Box
@@ -234,6 +238,7 @@ export function HowItWorksPage() {
           ]}
           buttonLabel="Become a Partner"
           buttonHref="/#contact"
+          buttonOnClick={() => router.push('/partners')}
           reverse
           mobileReverse
           backgroundColor="#FFFFFF"
@@ -319,6 +324,7 @@ export function HowItWorksPage() {
           ]}
           buttonLabel="Become a Partner"
           buttonHref="/#contact"
+          buttonOnClick={() => router.push('/partners')}
           backgroundColor="#F9FAFB"
           media={
             <Box

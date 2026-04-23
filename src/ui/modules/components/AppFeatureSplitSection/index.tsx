@@ -21,6 +21,7 @@ type AppFeatureSplitSectionProps = {
   features: FeatureItem[];
   buttonLabel: string;
   buttonHref: string;
+  buttonOnClick?: () => void;
   media: ReactNode;
   reverse?: boolean;
   mobileReverse?: boolean;
@@ -35,6 +36,7 @@ export function AppFeatureSplitSection({
   features,
   buttonLabel,
   buttonHref,
+  buttonOnClick,
   media,
   reverse = false,
   mobileReverse = false,
@@ -281,8 +283,9 @@ export function AppFeatureSplitSection({
 
               <Box>
                 <AppButton
-                  component="a"
-                  href={buttonHref}
+                  component={buttonOnClick ? 'button' : 'a'}
+                  href={buttonOnClick ? undefined : buttonHref}
+                  onClick={buttonOnClick}
                   variant="contained"
                   sx={{
                     opacity: isVisible ? 1 : 0,

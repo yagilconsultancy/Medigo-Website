@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { Box, Grid, Stack, Typography } from '@mui/material';
+import { useEffect, useRef, useState } from 'react';
 import { AppButton } from '../AppButton';
 import phoneTrack from '../../../../ui/assets/images/phone-track.png';
 import { pxToRem } from '../../../../common';
@@ -24,8 +25,50 @@ export function AppCtaBanner({
   primaryActionHref,
   secondaryActionHref,
 }: AppCtaBannerProps) {
+  const rootRef = useRef<HTMLDivElement | null>(null);
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const element = rootRef.current;
+    if (!element) return;
+
+    const reducedMotion = window.matchMedia(
+      '(prefers-reduced-motion: reduce)'
+    ).matches;
+
+    if (reducedMotion) {
+      setIsVisible(true);
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.unobserve(entry.target);
+        }
+      },
+      {
+        threshold: 0.2,
+        rootMargin: '0px 0px -10% 0px',
+      }
+    );
+
+    observer.observe(element);
+    return () => observer.disconnect();
+  }, []);
+
+  const revealStyle = (delay: number, xOffset = 0) => ({
+    opacity: isVisible ? 1 : 0,
+    transform: isVisible ? 'translate(0, 0)' : `translate(${xOffset}px, 18px)`,
+    transition: 'opacity 650ms ease, transform 650ms ease',
+    transitionDelay: isVisible ? `${delay}ms` : '0ms',
+    willChange: 'opacity, transform',
+  });
+
   return (
     <Box
+      ref={rootRef}
       component="section"
       sx={{
         position: 'relative',
@@ -54,6 +97,7 @@ export function AppCtaBanner({
               <Typography
                 component="h2"
                 sx={{
+                  ...revealStyle(0),
                   fontSize: {
                     xs: pxToRem(24),
                     sm: pxToRem(32),
@@ -69,6 +113,7 @@ export function AppCtaBanner({
 
               <Typography
                 sx={{
+                  ...revealStyle(140),
                   color: '#BEDBFF',
                   fontSize: {
                     xs: pxToRem(14),
@@ -86,7 +131,7 @@ export function AppCtaBanner({
               <Stack
                 direction={{ xs: 'column', sm: 'row' }}
                 spacing={{ xs: 1.5, sm: 2 }}
-                sx={{ pt: { xs: 1, md: 2 } }}
+                sx={{ pt: { xs: 1, md: 2 }, ...revealStyle(260) }}
               >
                 <AppButton
                   component={Link}
@@ -143,6 +188,12 @@ export function AppCtaBanner({
                 xs: 'none',
                 md: 'flex',
               },
+              opacity: isVisible ? 1 : 0,
+              transform: isVisible
+                ? 'translate(0, 0)'
+                : 'translate(56px, 0)',
+              transition: 'opacity 700ms ease, transform 700ms ease',
+              transitionDelay: isVisible ? '420ms' : '0ms',
               // minHeight: { xs: 280, sm: 360, md: 600 },
             }}
           >

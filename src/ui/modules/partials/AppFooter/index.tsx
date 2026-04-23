@@ -10,10 +10,10 @@ import { FooterLink } from './ui/components';
 
 const quickLinks = [
   { title: 'Home', href: '/' },
-  { title: 'How It Works', href: '/#how-it-works' },
-  { title: 'Partners', href: '/#partners' },
-  { title: 'About', href: '/#about' },
-  { title: 'Contact', href: '/#contact' },
+  { title: 'How It Works', href: '/how-it-works' },
+  { title: 'Partners', href: '/partners' },
+  { title: 'About', href: '/about' },
+  { title: 'Contact', href: '/contact' },
 ];
 
 const services = [

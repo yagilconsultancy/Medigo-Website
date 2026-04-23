@@ -35,6 +35,7 @@ import support247Icon from '../../../ui/assets/icons/247-support.svg';
 import realTimeIcon from '../../../ui/assets/icons/real-time.svg';
 import coreCoordinationIcon from '../../../ui/assets/icons/core-cordination.svg';
 import { ReactNode, useEffect, useRef, useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 type FeatureCardSection = {
   title: string;
@@ -324,6 +325,7 @@ const featureCardSections2: FeatureCardSectionConfig[] = [
 ];
 
 export const HomePage = () => {
+  const router = useRouter();
   const [expandedFaq, setExpandedFaq] = useState<
     (typeof faqItems)[number]['id'] | ''
   >(faqItems[0].id);
@@ -651,6 +653,7 @@ export const HomePage = () => {
           features={[...section.features]}
           buttonLabel={section.buttonLabel}
           buttonHref={section.buttonHref}
+          buttonOnClick={() => router.push('/partners')}
           media={section.media}
           reverse={section.reverse}
           mobileReverse={section.mobileReverse}

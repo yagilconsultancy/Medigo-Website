@@ -2,7 +2,7 @@
 
 import { ChevronRightRounded } from '@mui/icons-material';
 import { Box, Stack, Typography } from '@mui/material';
-import { ReactNode } from 'react';
+import { ReactNode, useEffect, useState } from 'react';
 import { pxToRem } from '../../../../common';
 import { AppButton } from '../AppButton';
 import { StyledLink } from '../StyledLink';
@@ -19,6 +19,7 @@ type AppGradientHeroSectionProps = {
   buttonHref?: string;
   buttonOnClick?: () => void;
   buttonEndIcon?: ReactNode;
+  entranceDelayMs?: number;
 };
 
 export function AppGradientHeroSection({
@@ -33,7 +34,24 @@ export function AppGradientHeroSection({
   buttonHref,
   buttonOnClick,
   buttonEndIcon = <ChevronRightRounded />,
+  entranceDelayMs = 500,
 }: AppGradientHeroSectionProps) {
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const reducedMotion = window.matchMedia(
+      '(prefers-reduced-motion: reduce)'
+    ).matches;
+
+    if (reducedMotion) {
+      setIsVisible(true);
+      return;
+    }
+
+    const timeout = window.setTimeout(() => setIsVisible(true), entranceDelayMs);
+    return () => window.clearTimeout(timeout);
+  }, [entranceDelayMs]);
+
   return (
     <Box
       component="section"
@@ -92,6 +110,9 @@ export function AppGradientHeroSection({
         {badgeLabel ? (
           <Box
             sx={{
+              opacity: isVisible ? 1 : 0,
+              transform: isVisible ? 'translateY(0)' : 'translateY(18px)',
+              transition: 'opacity 600ms ease, transform 600ms ease',
               borderRadius: '9999px',
               backgroundColor: '#EFF6FF',
               border: '0.667px solid #BEDBFF',
@@ -115,6 +136,9 @@ export function AppGradientHeroSection({
         <Typography
           component="h2"
           sx={{
+            opacity: isVisible ? 1 : 0,
+            transform: isVisible ? 'translateY(0)' : 'translateY(18px)',
+            transition: 'opacity 650ms ease, transform 650ms ease',
             color: (theme) => theme.color.faqTitle,
             fontSize: {
               xs: pxToRem(28),
@@ -128,7 +152,17 @@ export function AppGradientHeroSection({
           }}
         >
           {titleLines.map((line, index) => (
-            <Box key={line} component="span" sx={{ display: 'block' }}>
+            <Box
+              key={line}
+              component="span"
+              sx={{
+                display: 'block',
+                opacity: isVisible ? 1 : 0,
+                transform: isVisible ? 'translateY(0)' : 'translateY(18px)',
+                transition: 'opacity 650ms ease, transform 650ms ease',
+                transitionDelay: isVisible ? `${index * 120}ms` : '0ms',
+              }}
+            >
               {line}
               {index === titleLines.length - 1 && titleHighlight ? (
                 <Box
@@ -144,6 +178,10 @@ export function AppGradientHeroSection({
 
         <Typography
           sx={{
+            opacity: isVisible ? 1 : 0,
+            transform: isVisible ? 'translateY(0)' : 'translateY(18px)',
+            transition: 'opacity 650ms ease, transform 650ms ease',
+            transitionDelay: isVisible ? `${titleLines.length * 120}ms` : '0ms',
             color: (theme) => theme.color.faqText,
             fontSize: { xs: pxToRem(16), sm: pxToRem(18), md: pxToRem(20) },
             lineHeight: 1.45,
@@ -155,7 +193,17 @@ export function AppGradientHeroSection({
         </Typography>
 
         {buttonLabel && (buttonHref || buttonOnClick) ? (
-          <Box sx={{ pt: { xs: 0.5, md: 1 } }}>
+          <Box
+            sx={{
+              pt: { xs: 0.5, md: 1 },
+              opacity: isVisible ? 1 : 0,
+              transform: isVisible ? 'translateY(0)' : 'translateY(18px)',
+              transition: 'opacity 650ms ease, transform 650ms ease',
+              transitionDelay: isVisible
+                ? `${titleLines.length * 120 + 120}ms`
+                : '0ms',
+            }}
+          >
             <AppButton
               component={buttonHref ? StyledLink : 'button'}
               href={buttonHref}
