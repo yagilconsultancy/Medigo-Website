@@ -328,10 +328,7 @@ export function AppHeroShowcaseSection({
         );
       }
 
-      if (
-        enablePin &&
-        window.matchMedia('(min-width: 900px)').matches
-      ) {
+      if (enablePin && window.matchMedia('(min-width: 900px)').matches) {
         triggers.push(
           ScrollTrigger.create({
             trigger: root,

@@ -2,11 +2,20 @@
 
 import { Box, Divider, IconButton, Stack, Typography } from '@mui/material';
 import Grid from '@mui/material/Grid';
-import { Facebook, Twitter, LinkedIn, MailOutline } from '@mui/icons-material';
+import {
+  Facebook,
+  Instagram,
+  LinkedIn,
+  MailOutline,
+} from '@mui/icons-material';
 import Link from 'next/link';
-import { AppLogo, RowStack, StyledLink } from '../../components';
+import { AppLogo, RowStack, StyledImage, StyledLink } from '../../components';
 import { pxToRem } from '../../../../common';
 import { FooterLink } from './ui/components';
+import footerLogo from '../../../assets/icons/logo-footer.svg';
+import locationIcon from './ui/assets/icons/location-footer.svg';
+import mailIcon from './ui/assets/icons/mail-footer.svg';
+import phoneIcon from './ui/assets/icons/phone-footer.svg';
 
 const quickLinks = [
   { title: 'Home', href: '/' },
@@ -23,9 +32,21 @@ const services = [
 ];
 
 const socialLinks = [
-  { label: 'Facebook', href: '#', icon: Facebook },
-  { label: 'Twitter', href: '#', icon: Twitter },
-  { label: 'LinkedIn', href: '#', icon: LinkedIn },
+  {
+    label: 'Facebook',
+    href: 'https://www.facebook.com/people/Medige/61576495407216/',
+    icon: Facebook,
+  },
+  {
+    label: 'Instagram',
+    href: 'https://www.instagram.com/p/DXN5uoyjWmt/?utm_source=ig_web_copy_link&igsh=NTc4MTIwNjQ2YQ==',
+    icon: Instagram,
+  },
+  {
+    label: 'LinkedIn',
+    href: 'https://www.linkedin.com/company/medigo-canada',
+    icon: LinkedIn,
+  },
   { label: 'Email', href: 'mailto:info@getmedigo.com', icon: MailOutline },
 ];
 
@@ -53,30 +74,109 @@ export function AppFooter() {
           container
           sx={{
             alignItems: 'start',
+            justifyContent: 'space-between',
           }}
           columnSpacing={{ xs: 3, md: 4, lg: 5 }}
           rowSpacing={{ xs: 4, md: 0 }}
-          columns={{ xs: 12, lg: 20 }}
+          // columns={{ xs: 12, lg: 20 }}
         >
-          <Grid size={{ xs: 12, sm: 6, lg: 7 }}>
+          <Grid size={{ xs: 12, sm: 6, lg: 2.5 }}>
             <Stack spacing={2.5}>
-              <AppLogo width={93} height={10} />
+              {/* <AppLogo width={93} height={10} /> */}
+              <StyledImage
+                src={footerLogo}
+                alt="Medigo Footer Logo"
+                width={93}
+                height={10}
+                sx={{
+                  width: {
+                    xs: '93px',
+                    md: '175px',
+                  },
+                  height: {
+                    xs: '20px',
+                    md: '45px',
+                  },
+                }}
+              />
               <Typography
                 sx={{
                   color: (theme) => theme.color.footerText,
                   fontSize: { xs: pxToRem(14), sm: pxToRem(16) },
                   lineHeight: 1.5,
-                  maxWidth: 258,
+                  // maxWidth: 258,
                   fontWeight: 400,
                 }}
               >
                 Redefining care mobility through structured coordination for
                 healthcare access and daily living.
               </Typography>
+              <Stack spacing={'12px'}>
+                <RowStack spacing={'10px'}>
+                  <StyledImage
+                    src={phoneIcon}
+                    alt="Phone Icon"
+                    sx={{
+                      width: '14px',
+                      height: '14px',
+                    }}
+                  />
+                  <Typography
+                    sx={{
+                      color: '#9CA3AF',
+                      fontSize: { xs: pxToRem(10), sm: pxToRem(14) },
+                      lineHeight: '20px',
+                      fontWeight: 400,
+                    }}
+                  >
+                    1-416-521-3116
+                  </Typography>
+                </RowStack>
+                <RowStack spacing={'10px'}>
+                  <StyledImage
+                    src={mailIcon}
+                    alt="Phone Icon"
+                    sx={{
+                      width: '14px',
+                      height: '14px',
+                    }}
+                  />
+                  <Typography
+                    sx={{
+                      color: '#9CA3AF',
+                      fontSize: { xs: pxToRem(10), sm: pxToRem(14) },
+                      lineHeight: '20px',
+                      fontWeight: 400,
+                    }}
+                  >
+                    Info@getmedigo.com
+                  </Typography>
+                </RowStack>
+                <RowStack spacing={'10px'}>
+                  <StyledImage
+                    src={locationIcon}
+                    alt="Phone Icon"
+                    sx={{
+                      width: '14px',
+                      height: '14px',
+                    }}
+                  />
+                  <Typography
+                    sx={{
+                      color: '#9CA3AF',
+                      fontSize: { xs: pxToRem(10), sm: pxToRem(14) },
+                      lineHeight: '20px',
+                      fontWeight: 400,
+                    }}
+                  >
+                    Milton, Ontario
+                  </Typography>
+                </RowStack>
+              </Stack>
             </Stack>
           </Grid>
 
-          <Grid size={{ xs: 6, sm: 6, lg: 4 }}>
+          <Grid size={{ xs: 6, sm: 6, lg: 2 }}>
             <Stack spacing={2}>
               <Typography
                 sx={{
@@ -100,7 +200,7 @@ export function AppFooter() {
             </Stack>
           </Grid>
 
-          <Grid size={{ xs: 6, sm: 6, lg: 4 }}>
+          <Grid size={{ xs: 6, sm: 6, lg: 2 }}>
             <Stack spacing={2}>
               <Typography
                 sx={{
@@ -124,7 +224,7 @@ export function AppFooter() {
             </Stack>
           </Grid>
 
-          <Grid size={{ xs: 12, sm: 6, lg: 5 }}>
+          <Grid size={{ xs: 12, sm: 6, lg: 3 }}>
             <Stack spacing={2}>
               <Typography
                 sx={{
@@ -148,9 +248,10 @@ export function AppFooter() {
                       aria-label={item.label}
                       sx={{
                         color: (theme) => theme.color.footerText,
-                        borderRadius: 0,
-                        width: 20,
-                        height: 20,
+                        borderRadius: '50%',
+                        background: 'rgba(255, 255, 255, 0.10)',
+                        width: '36px',
+                        height: '36px',
                         p: 0,
                         '&:hover': {
                           color: (theme) => theme.palette.background.default,
@@ -163,8 +264,50 @@ export function AppFooter() {
                   );
                 })}
               </RowStack>
+              <Stack
+                sx={{
+                  background: 'rgba(255, 255, 255, 0.05)',
+                  borderRadius: '16px',
+                  border: '0.667px solid rgba(255, 255, 255, 0.10)',
+                  padding: '19.33px 20.67px',
+                }}
+                spacing={'11.7px'}
+              >
+                <Stack spacing={1}>
+                  <Typography
+                    sx={{
+                      color: (theme) => theme.palette.background.default,
+                      fontSize: { xs: pxToRem(10), sm: pxToRem(14) },
+                      fontWeight: 600,
+                      lineHeight: '21px',
+                    }}
+                  >
+                    24/7 Emergency Dispatch
+                  </Typography>
+                  <Typography
+                    sx={{
+                      color: '#9CA3AF',
+                      fontSize: { xs: pxToRem(8), sm: pxToRem(13) },
+                      fontWeight: 400,
+                      lineHeight: '19.5px',
+                    }}
+                  >
+                    For urgent transportation needs
+                  </Typography>
+                </Stack>
+                <Typography
+                  sx={{
+                    color: 'primary.main',
+                    fontSize: { xs: pxToRem(12), sm: pxToRem(18) },
+                    fontWeight: 700,
+                    lineHeight: '27px',
+                  }}
+                >
+                  1-416-521-3116
+                </Typography>
+              </Stack>
 
-              <StyledLink
+              {/* <StyledLink
                 href="mailto:info@getmedigo.com"
                 sx={{
                   color: (theme) => theme.color.footerText,
@@ -177,7 +320,7 @@ export function AppFooter() {
                 }}
               >
                 info@getmedigo.com
-              </StyledLink>
+              </StyledLink> */}
             </Stack>
           </Grid>
         </Grid>
@@ -188,18 +331,29 @@ export function AppFooter() {
             my: '31.991px',
           }}
         />
-
-        <Typography
-          sx={{
-            textAlign: 'center',
-            color: (theme) => theme.color.footerText,
-            fontSize: { xs: pxToRem(13), sm: pxToRem(14), md: pxToRem(16) },
-            lineHeight: 1.5,
-            fontWeight: 400,
-          }}
+        <Stack
+          alignItems={'center'}
+          justifyContent={'space-between'}
+          direction={{ xs: 'column', md: 'row' }}
+          spacing={{ xs: 2, md: 0 }}
         >
-          © {new Date().getFullYear()} MediGO. All rights reserved.
-        </Typography>
+          <Typography
+            sx={{
+              textAlign: 'center',
+              color: (theme) => theme.color.footerText,
+              fontSize: { xs: pxToRem(13), sm: pxToRem(14), md: pxToRem(16) },
+              lineHeight: 1.5,
+              fontWeight: 400,
+            }}
+          >
+            © {new Date().getFullYear()} MediGo. All rights reserved.
+          </Typography>
+          <RowStack spacing={'15.3px'}>
+            <FooterLink link="Privacy Policy" href="#/privacy-policy" />
+            <FooterLink link="Terms of Service" href="#/terms-of-service" />
+            <FooterLink link="Accessibility" href="#/accessibility" />
+          </RowStack>
+        </Stack>
       </Box>
     </Box>
   );

@@ -71,7 +71,7 @@ const partnerRequirementCards = [
   {
     title: 'Compliance & Safety',
     items: [
-      'HIPAA compliance and patient privacy',
+      'PHIPA compliance and patient privacy',
       'Adherence to all state/local regulations',
       'Safety protocols and emergency procedures',
       'Quality assurance and ongoing training',
@@ -419,7 +419,7 @@ export const PartnerPage = () => {
                     fontWeight: 400,
                   }}
                 >
-                  Four simple steps to becoming a certified MediGO partner
+                  Four simple steps to becoming a certified MediGo partner
                   company
                 </Typography>
               </Box>

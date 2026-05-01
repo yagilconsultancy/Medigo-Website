@@ -30,7 +30,7 @@ const coreValueItems = [
     ),
     title: 'System Integration',
     description:
-      'Medigo connects facilities, individuals, and providers through one coordinated platform for a seamless experience.',
+      'MediGo connects facilities, individuals, and providers through one coordinated platform for a seamless experience.',
     iconBackground: '#E0E7FF',
   },
   {
@@ -287,7 +287,7 @@ export const AboutPage = () => {
                   }}
                 >
                   Whether it&apos;s recurring dialysis treatments, post-surgery
-                  follow-ups, or daily therapy sessions, MediGO provides the
+                  follow-ups, or daily therapy sessions, MediGo provides the
                   transportation infrastructure that healthcare delivery depends
                   on.
                 </Typography>

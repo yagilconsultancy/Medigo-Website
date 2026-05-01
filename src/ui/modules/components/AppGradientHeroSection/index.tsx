@@ -48,7 +48,10 @@ export function AppGradientHeroSection({
       return;
     }
 
-    const timeout = window.setTimeout(() => setIsVisible(true), entranceDelayMs);
+    const timeout = window.setTimeout(
+      () => setIsVisible(true),
+      entranceDelayMs
+    );
     return () => window.clearTimeout(timeout);
   }, [entranceDelayMs]);
 

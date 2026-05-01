@@ -189,9 +189,7 @@ export function AppCtaBanner({
                 md: 'flex',
               },
               opacity: isVisible ? 1 : 0,
-              transform: isVisible
-                ? 'translate(0, 0)'
-                : 'translate(56px, 0)',
+              transform: isVisible ? 'translate(0, 0)' : 'translate(56px, 0)',
               transition: 'opacity 700ms ease, transform 700ms ease',
               transitionDelay: isVisible ? '420ms' : '0ms',
               // minHeight: { xs: 280, sm: 360, md: 600 },

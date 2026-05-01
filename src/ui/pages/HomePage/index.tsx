@@ -132,9 +132,9 @@ const howItWorksSteps = [
 const faqItems = [
   {
     id: 'what-is-medigo',
-    title: 'What is MediGO?',
+    title: 'What is MediGo?',
     description:
-      'MediGO is a platform that helps individuals and families arrange safe, comfortable, non-emergency medical transportation (NEMT). We coordinate with certified providers for appointments, treatments, and non-emergency medical needs with dignity and respect.',
+      'MediGo is a platform that helps individuals and families arrange safe, comfortable, non-emergency medical transportation (NEMT). We coordinate with certified providers for appointments, treatments, and non-emergency medical needs with dignity and respect.',
   },
   {
     id: 'request-transport',
@@ -152,7 +152,7 @@ const faqItems = [
     id: 'emergency-service',
     title: 'Is this an emergency service?',
     description:
-      'No. MediGO provides non-emergency medical transportation only. For emergencies, please call 911. We focus on scheduled medical appointments, treatments, and wellness trips that require professional, caring transport.',
+      'No. MediGo provides non-emergency medical transportation only. For emergencies, please call 911. We focus on scheduled medical appointments, treatments, and wellness trips that require professional, caring transport.',
   },
 ] as const;
 
@@ -1205,224 +1205,223 @@ export const HomePage = () => {
           py: { xs: 4, md: 0 },
         }}
       >
-          <Grid
-            container
-            alignItems="center"
-            spacing={{
-              xs: 4,
-              md: 3,
-            }}
-            sx={{
-              width: '100%',
-              height: { xs: 'auto', md: '533px' },
-            }}
-          >
-            <Grid size={{ xs: 12, md: 8 }}>
-              <Stack
-                spacing={{ xs: 2.5, md: 3 }}
-                sx={{
-                  color: '#FFFFFF',
-                }}
-              >
-                <Typography
-                  component="h2"
-                  sx={{
-                    ...bookRideRevealStyle(0),
-                    fontSize: {
-                      xs: pxToRem(28),
-                      sm: pxToRem(36),
-                      md: pxToRem(48),
-                      lg: pxToRem(60),
-                    },
-                    lineHeight: { xs: 1.15, md: 1.25 },
-                    fontWeight: 700,
-                  }}
-                >
-                  Book a Ride in Seconds.
-                </Typography>
-
-                <Typography
-                  sx={{
-                    ...bookRideRevealStyle(120),
-                    color: '#BEDBFF',
-                    fontSize: {
-                      xs: pxToRem(16),
-                      sm: pxToRem(20),
-                      md: pxToRem(26),
-                    },
-                    lineHeight: 1.45,
-                    fontWeight: 400,
-                    maxWidth: { xs: '100%', md: 686 },
-                  }}
-                >
-                  Discover dependable and seamless mobility care today. Schedule
-                  your first ride in just a few minutes and enjoy the
-                  convenience!
-                </Typography>
-
-                <Box sx={{ pt: { xs: 1, md: 1.5 } }}>
-                  <Typography
-                    sx={{
-                      ...bookRideRevealStyle(220),
-                      color: '#FFFFFF',
-                      fontSize: {
-                        xs: pxToRem(15),
-                        md: pxToRem(18),
-                      },
-                      lineHeight: 1.5,
-                    }}
-                  >
-                    Get the App
-                  </Typography>
-                </Box>
-
-                <Stack
-                  direction="row"
-                  spacing={1.5}
-                  sx={bookRideRevealStyle(300)}
-                >
-                  <Box
-                    component="a"
-                    href="#"
-                    aria-label="Download on the App Store"
-                    sx={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'flex-start',
-                      gap: 1.5,
-                      width: { xs: 200, sm: 209 },
-                      height: { xs: 66, sm: 70 },
-                      px: 1.5,
-                      borderRadius: '6px',
-                      backgroundColor: '#000000',
-                      border: '1.742px solid #A6A6A6',
-                      textDecoration: 'none',
-                    }}
-                  >
-                    <StyledImage
-                      src={appleIcon}
-                      alt=""
-                      sx={{ width: 35, height: 32, flexShrink: 0 }}
-                    />
-                    <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-                      <Typography
-                        sx={{
-                          color: '#FFFFFF',
-                          fontSize: {
-                            xs: pxToRem(12),
-                            sm: pxToRem(15),
-                          },
-                          lineHeight: 1.1,
-                          fontWeight: 500,
-                        }}
-                      >
-                        Download on the
-                      </Typography>
-                      <Typography
-                        sx={{
-                          color: '#FFFFFF',
-                          fontSize: {
-                            xs: pxToRem(18),
-                            sm: pxToRem(24),
-                          },
-                          lineHeight: 1,
-                          fontWeight: 500,
-                          letterSpacing: '-0.02em',
-                        }}
-                      >
-                        App Store
-                      </Typography>
-                    </Box>
-                  </Box>
-
-                  <Box
-                    component="a"
-                    href="#"
-                    aria-label="Get it on Google Play"
-                    sx={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'flex-start',
-                      gap: 1.5,
-                      width: { xs: 200, sm: 209 },
-                      height: { xs: 66, sm: 70 },
-                      px: 1.5,
-                      borderRadius: '6px',
-                      backgroundColor: '#000000',
-                      border: '1.742px solid #A6A6A6',
-                      textDecoration: 'none',
-                    }}
-                  >
-                    <StyledImage
-                      src={playstoreIcon}
-                      alt=""
-                      sx={{ width: 36, height: 42, flexShrink: 0 }}
-                    />
-                    <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-                      <Typography
-                        sx={{
-                          color: '#FFFFFF',
-                          fontSize: {
-                            xs: pxToRem(12),
-                            md: pxToRem(17),
-                          },
-                          lineHeight: 1.1,
-                          fontWeight: 400,
-                          textTransform: 'uppercase',
-                        }}
-                      >
-                        GET IT ON
-                      </Typography>
-                      <Typography
-                        sx={{
-                          color: '#FFFFFF',
-                          fontSize: {
-                            xs: pxToRem(18),
-                            md: pxToRem(24),
-                          },
-                          lineHeight: 1,
-                          fontWeight: 400,
-                          letterSpacing: '-0.02em',
-                        }}
-                      >
-                        Google Play
-                      </Typography>
-                    </Box>
-                  </Box>
-                </Stack>
-              </Stack>
-            </Grid>
-
-            <Grid
-              size={{ xs: 12, md: 4 }}
+        <Grid
+          container
+          alignItems="center"
+          spacing={{
+            xs: 4,
+            md: 3,
+          }}
+          sx={{
+            width: '100%',
+            height: { xs: 'auto', md: '533px' },
+          }}
+        >
+          <Grid size={{ xs: 12, md: 8 }}>
+            <Stack
+              spacing={{ xs: 2.5, md: 3 }}
               sx={{
-                display: {
-                  // xs: 'none',
-                  xs: 'flex',
-                },
-                height: { xs: 250, md: 533 },
-                alignItems: { xs: 'center', md: 'flex-end' },
-                overflow: 'hidden',
-                ...bookRideRevealStyle(520, 42),
+                color: '#FFFFFF',
               }}
             >
-              <StyledImage
-                src={overflowImage}
-                alt=""
+              <Typography
+                component="h2"
                 sx={{
-                  position: 'absolute',
-                  right: { xs: 60, sm: 10, md: 20, lg: 35 },
-                  top: 'auto',
-                  bottom: { xs: 0, md: -28 },
-                  width: { xs: 380, sm: 520, md: 882 },
-                  maxWidth: 'none',
-                  pointerEvents: 'none',
-                  userSelect: 'none',
+                  ...bookRideRevealStyle(0),
+                  fontSize: {
+                    xs: pxToRem(28),
+                    sm: pxToRem(36),
+                    md: pxToRem(48),
+                    lg: pxToRem(60),
+                  },
+                  lineHeight: { xs: 1.15, md: 1.25 },
+                  fontWeight: 700,
                 }}
-              />
-            </Grid>
+              >
+                Book a Ride in Seconds.
+              </Typography>
+
+              <Typography
+                sx={{
+                  ...bookRideRevealStyle(120),
+                  color: '#BEDBFF',
+                  fontSize: {
+                    xs: pxToRem(16),
+                    sm: pxToRem(20),
+                    md: pxToRem(26),
+                  },
+                  lineHeight: 1.45,
+                  fontWeight: 400,
+                  maxWidth: { xs: '100%', md: 686 },
+                }}
+              >
+                Discover dependable and seamless mobility care today. Schedule
+                your first ride in just a few minutes and enjoy the convenience!
+              </Typography>
+
+              <Box sx={{ pt: { xs: 1, md: 1.5 } }}>
+                <Typography
+                  sx={{
+                    ...bookRideRevealStyle(220),
+                    color: '#FFFFFF',
+                    fontSize: {
+                      xs: pxToRem(15),
+                      md: pxToRem(18),
+                    },
+                    lineHeight: 1.5,
+                  }}
+                >
+                  Get the App
+                </Typography>
+              </Box>
+
+              <Stack
+                direction="row"
+                spacing={1.5}
+                sx={bookRideRevealStyle(300)}
+              >
+                <Box
+                  component="a"
+                  href="#"
+                  aria-label="Download on the App Store"
+                  sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'flex-start',
+                    gap: 1.5,
+                    width: { xs: 200, sm: 209 },
+                    height: { xs: 66, sm: 70 },
+                    px: 1.5,
+                    borderRadius: '6px',
+                    backgroundColor: '#000000',
+                    border: '1.742px solid #A6A6A6',
+                    textDecoration: 'none',
+                  }}
+                >
+                  <StyledImage
+                    src={appleIcon}
+                    alt=""
+                    sx={{ width: 35, height: 32, flexShrink: 0 }}
+                  />
+                  <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+                    <Typography
+                      sx={{
+                        color: '#FFFFFF',
+                        fontSize: {
+                          xs: pxToRem(12),
+                          sm: pxToRem(15),
+                        },
+                        lineHeight: 1.1,
+                        fontWeight: 500,
+                      }}
+                    >
+                      Download on the
+                    </Typography>
+                    <Typography
+                      sx={{
+                        color: '#FFFFFF',
+                        fontSize: {
+                          xs: pxToRem(18),
+                          sm: pxToRem(24),
+                        },
+                        lineHeight: 1,
+                        fontWeight: 500,
+                        letterSpacing: '-0.02em',
+                      }}
+                    >
+                      App Store
+                    </Typography>
+                  </Box>
+                </Box>
+
+                <Box
+                  component="a"
+                  href="#"
+                  aria-label="Get it on Google Play"
+                  sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'flex-start',
+                    gap: 1.5,
+                    width: { xs: 200, sm: 209 },
+                    height: { xs: 66, sm: 70 },
+                    px: 1.5,
+                    borderRadius: '6px',
+                    backgroundColor: '#000000',
+                    border: '1.742px solid #A6A6A6',
+                    textDecoration: 'none',
+                  }}
+                >
+                  <StyledImage
+                    src={playstoreIcon}
+                    alt=""
+                    sx={{ width: 36, height: 42, flexShrink: 0 }}
+                  />
+                  <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+                    <Typography
+                      sx={{
+                        color: '#FFFFFF',
+                        fontSize: {
+                          xs: pxToRem(12),
+                          md: pxToRem(17),
+                        },
+                        lineHeight: 1.1,
+                        fontWeight: 400,
+                        textTransform: 'uppercase',
+                      }}
+                    >
+                      GET IT ON
+                    </Typography>
+                    <Typography
+                      sx={{
+                        color: '#FFFFFF',
+                        fontSize: {
+                          xs: pxToRem(18),
+                          md: pxToRem(24),
+                        },
+                        lineHeight: 1,
+                        fontWeight: 400,
+                        letterSpacing: '-0.02em',
+                      }}
+                    >
+                      Google Play
+                    </Typography>
+                  </Box>
+                </Box>
+              </Stack>
+            </Stack>
           </Grid>
-        </Box>
+
+          <Grid
+            size={{ xs: 12, md: 4 }}
+            sx={{
+              display: {
+                // xs: 'none',
+                xs: 'flex',
+              },
+              height: { xs: 250, md: 533 },
+              alignItems: { xs: 'center', md: 'flex-end' },
+              overflow: 'hidden',
+              ...bookRideRevealStyle(520, 42),
+            }}
+          >
+            <StyledImage
+              src={overflowImage}
+              alt=""
+              sx={{
+                position: 'absolute',
+                right: { xs: 60, sm: 10, md: 20, lg: 35 },
+                top: 'auto',
+                bottom: { xs: 0, md: -28 },
+                width: { xs: 380, sm: 520, md: 882 },
+                maxWidth: 'none',
+                pointerEvents: 'none',
+                userSelect: 'none',
+              }}
+            />
+          </Grid>
+        </Grid>
+      </Box>
 
       <AppRevealOnScroll delay={300} distance={20}>
         <Box

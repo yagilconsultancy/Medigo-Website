@@ -137,7 +137,7 @@ export const ContactPage = () => {
                       {
                         icon: phoneIcon,
                         title: 'Phone',
-                        value: '1-800-MEDI-GO1',
+                        value: '1-416-521-3116',
                         note: 'Mon-Fri 8am-8pm EST',
                       },
                       {
@@ -149,8 +149,7 @@ export const ContactPage = () => {
                       {
                         icon: officeIcon,
                         title: 'Office',
-                        value:
-                          '123 Healthcare Drive\nSuite 400\nMilton, MA 02101',
+                        value: 'Milton, Ontario',
                         note: '',
                       },
                     ].map((item) => (
