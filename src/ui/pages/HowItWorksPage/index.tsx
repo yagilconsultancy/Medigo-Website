@@ -24,8 +24,8 @@ import {
 import { pxToRem } from '../../../common';
 import confirmationIcon from '../../../ui/assets/icons/confirmation.svg';
 import coreCoordinationIcon from '../../../ui/assets/icons/core-cordination.svg';
-import assistanceSupportIcon from '../../../ui/assets/icons/assistance-support.svg';
-import recurringIcon from '../../../ui/assets/icons/recurring.svg';
+// import assistanceSupportIcon from '../../../ui/assets/icons/assistance-support.svg';
+// import recurringIcon from '../../../ui/assets/icons/recurring.svg';
 import support247Icon from '../../../ui/assets/icons/247-support.svg';
 import realTimeIcon from '../../../ui/assets/icons/real-time.svg';
 import transportRequestImage from '../../../ui/assets/images/transport-request.png';
@@ -516,8 +516,8 @@ export function HowItWorksPage() {
           description="Discover dependable and seamless mobility care today. Schedule your first ride in just a few minutes and enjoy the convenience!"
           primaryActionLabel="Book a Ride"
           secondaryActionLabel="Schedule Ride"
-          primaryActionHref="/#contact"
-          secondaryActionHref="/#contact"
+          primaryActionHref={`${process.env['NEXT_PUBLIC_WEB_BOOING_URL']}`}
+          secondaryActionHref={`${process.env['NEXT_PUBLIC_WEB_BOOING_URL']}`}
         />
       </AppRevealOnScroll>
     </AppLayout>

@@ -169,7 +169,7 @@ export function AppHeader() {
 
           <AppButton
             component={Link}
-            href="/#contact"
+            href={`${process.env['NEXT_PUBLIC_WEB_BOOING_URL']}`}
             variant="contained"
             sx={{
               display: { xs: 'none', md: 'inline-flex' },

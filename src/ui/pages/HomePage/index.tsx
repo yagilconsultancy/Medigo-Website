@@ -330,43 +330,43 @@ export const HomePage = () => {
     (typeof faqItems)[number]['id'] | ''
   >(faqItems[0].id);
   const commitmentHeadingRef = useRef<HTMLHeadingElement | null>(null);
-  const [isCommitmentHeadingVisible, setIsCommitmentHeadingVisible] =
-    useState(false);
+  // const [isCommitmentHeadingVisible, setIsCommitmentHeadingVisible] =
+  useState(false);
   const bookRideSectionRef = useRef<HTMLDivElement | null>(null);
   const [isBookRideVisible, setIsBookRideVisible] = useState(false);
-  const commitmentHeadingText =
-    "Building the nation's most reliable medical transport network";
+  // const commitmentHeadingText =
+  ("Building the nation's most reliable medical transport network");
 
-  useEffect(() => {
-    const element = commitmentHeadingRef.current;
-    if (!element) return;
+  // useEffect(() => {
+  //   const element = commitmentHeadingRef.current;
+  //   if (!element) return;
 
-    const reducedMotion = window.matchMedia(
-      '(prefers-reduced-motion: reduce)'
-    ).matches;
+  //   const reducedMotion = window.matchMedia(
+  //     '(prefers-reduced-motion: reduce)'
+  //   ).matches;
 
-    if (reducedMotion) {
-      setIsCommitmentHeadingVisible(true);
-      return;
-    }
+  //   if (reducedMotion) {
+  //     setIsCommitmentHeadingVisible(true);
+  //     return;
+  //   }
 
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsCommitmentHeadingVisible(true);
-          observer.unobserve(entry.target);
-        }
-      },
-      {
-        threshold: 0.35,
-        rootMargin: '0px 0px -12% 0px',
-      }
-    );
+  //   const observer = new IntersectionObserver(
+  //     ([entry]) => {
+  //       if (entry.isIntersecting) {
+  //         setIsCommitmentHeadingVisible(true);
+  //         observer.unobserve(entry.target);
+  //       }
+  //     },
+  //     {
+  //       threshold: 0.35,
+  //       rootMargin: '0px 0px -12% 0px',
+  //     }
+  //   );
 
-    observer.observe(element);
+  //   observer.observe(element);
 
-    return () => observer.disconnect();
-  }, []);
+  //   return () => observer.disconnect();
+  // }, []);
 
   useEffect(() => {
     const element = bookRideSectionRef.current;
@@ -424,9 +424,9 @@ export const HomePage = () => {
         image={heroImage}
         imageAlt="Wheelchair accessible medical transport vehicle"
         primaryActionLabel="Schedule a Ride"
-        primaryActionHref="/#contact"
+        primaryActionHref={`${process.env['NEXT_PUBLIC_WEB_BOOING_URL']}`}
         secondaryActionLabel="Join Network"
-        secondaryActionHref="/#contact"
+        secondaryActionHref="/partners"
         topPill={{
           label: 'On-Time Rate',
           value: '98%',
@@ -613,7 +613,7 @@ export const HomePage = () => {
             >
               <AppButton
                 component={StyledLink}
-                href="/#contact"
+                href="/contact"
                 endIcon={<ChevronRightRounded />}
                 variant="contained"
                 color="primary"
@@ -884,7 +884,7 @@ export const HomePage = () => {
                       <Box sx={{ pt: { xs: 0.5, md: 1 } }}>
                         <AppButton
                           component={StyledLink}
-                          href="/#contact"
+                          href={`${process.env['NEXT_PUBLIC_WEB_BOOING_URL']}`}
                           variant="contained"
                           color="primary"
                           sx={{
@@ -964,7 +964,7 @@ export const HomePage = () => {
                       <Box sx={{ pt: { xs: 0.5, md: 1 } }}>
                         <AppButton
                           component={StyledLink}
-                          href="/#contact"
+                          href="/partners"
                           variant="contained"
                           color="primary"
                           sx={{
@@ -999,7 +999,7 @@ export const HomePage = () => {
               >
                 <AppButton
                   component={StyledLink}
-                  href="/#contact"
+                  href="/contact"
                   endIcon={<ChevronRightRounded />}
                   variant="contained"
                   color="primary"
@@ -1076,7 +1076,7 @@ export const HomePage = () => {
 
               <Typography
                 component="h2"
-                ref={commitmentHeadingRef}
+                // ref={commitmentHeadingRef}
                 sx={{
                   textAlign: 'center',
                   fontSize: {
@@ -1084,12 +1084,15 @@ export const HomePage = () => {
                     sm: pxToRem(44),
                     md: pxToRem(60),
                   },
+                  color: 'primary.main',
                   lineHeight: 1,
                   fontWeight: 700,
-                  maxWidth: 760,
+                  maxWidth: 800,
                 }}
               >
-                <Box
+                Building the nation&apos;s most reliable medical transport
+                network
+                {/* <Box
                   component="span"
                   sx={{
                     display: 'inline',
@@ -1118,7 +1121,7 @@ export const HomePage = () => {
                       </Box>
                     );
                   })}
-                </Box>
+                </Box> */}
               </Typography>
 
               <Box

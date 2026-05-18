@@ -527,8 +527,8 @@ export const PartnerPage = () => {
           description="Take the first step toward growing your NEMT business with MediGo's certified partner network."
           primaryActionLabel="Apply to Become a Partner"
           secondaryActionLabel="Schedule a Consultation"
-          primaryActionHref="/#contact"
-          secondaryActionHref="/#contact"
+          primaryActionHref="/partners"
+          secondaryActionHref="/contact"
         />
       </AppRevealOnScroll>
 
