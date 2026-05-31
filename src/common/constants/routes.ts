@@ -7,6 +7,7 @@ export const ROUTES_SPEC = {
   login: `/${API_VERSION}/auth/login`,
   logout: `/${API_VERSION}/auth/logout`,
   refresh: `/${API_VERSION}/auth/refresh`,
+  applyFleetPartnerApplication: `/${API_VERSION}/users/public/fleet/apply`,
   getSupportKpis: `/${API_VERSION}/support/kpis`,
   listSupportTickets: `/${API_VERSION}/support/tickets`,
   reopenTicket: (ticketId: string) =>

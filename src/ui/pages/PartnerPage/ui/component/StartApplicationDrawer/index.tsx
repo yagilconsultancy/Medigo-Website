@@ -13,6 +13,11 @@ import {
   VisuallyHiddenInput,
 } from '../../../../../modules/components';
 import { pxToRem } from '../../../../../../common';
+import { useFleetApplicationApi } from '../../../../../../common/hooks';
+import {
+  FleetPartnerApplicationDocument,
+  FleetPartnerApplicationFormValues,
+} from '../../../../../../common/types';
 import { ReactNode, useState } from 'react';
 import networkRequirementIcon from '../../assets/icons/Icon-5.svg';
 import companyInformationIcon from '../../assets/icons/Icon-6.svg';
@@ -22,41 +27,12 @@ import insuranceComplianceIcon from '../../assets/icons/Icon-4.svg';
 import additionalInformationIcon from '../../assets/icons/Icon-8.svg';
 import uploadIcon from '../../assets/icons/Icon-9.svg';
 
-type ApplicationFormValues = {
-  companyName: string;
-  registrationNumber: string;
-  yearsInOperation: string;
-  streetAddress: string;
-  city: string;
-  province: string;
-  postalCode: string;
-  contactName: string;
-  title: string;
-  emailAddress: string;
-  phoneNumber: string;
-  alternatePhoneNumber: string;
-  totalVehicles: string;
-  averageVehicleAge: string;
-  wheelchairAccessibleCount: string;
-  stretcherAccessibleCount: string;
-  ambulatoryVehicles: string;
-  insuranceProvider: string;
-  policyNumber: string;
-  liabilityCoverageAmount: string;
-  currentServiceAreas: string;
-  currentHealthcareContracts: string;
-  additionalInformation: string;
-  confirmAccuracy: boolean;
-  confirmStandards: boolean;
-  consentContact: boolean;
-};
-
 type StartApplicationDrawerProps = {
   open: boolean;
   onClose: () => void;
 };
 
-const initialValues: ApplicationFormValues = {
+const initialValues: FleetPartnerApplicationFormValues = {
   companyName: '',
   registrationNumber: '',
   yearsInOperation: '',
@@ -85,14 +61,20 @@ const initialValues: ApplicationFormValues = {
   consentContact: false,
 };
 
+const wholeNumberRegex = /^\d+$/;
+
+const wholeNumberField = (label: string) =>
+  Yup.string()
+    .trim()
+    .matches(wholeNumberRegex, `${label} must be a valid whole number.`)
+    .required(`${label} is required.`);
+
 const validationSchema = Yup.object({
   companyName: Yup.string().trim().required('Company name is required.'),
   registrationNumber: Yup.string()
     .trim()
     .required('Registration number is required.'),
-  yearsInOperation: Yup.string()
-    .trim()
-    .required('Years in operation is required.'),
+  yearsInOperation: wholeNumberField('Years in operation'),
   streetAddress: Yup.string().trim().required('Street address is required.'),
   city: Yup.string().trim().required('City is required.'),
   province: Yup.string().trim().required('Province is required.'),
@@ -105,19 +87,11 @@ const validationSchema = Yup.object({
     .required('Email is required.'),
   phoneNumber: Yup.string().trim().required('Phone number is required.'),
   alternatePhoneNumber: Yup.string().trim(),
-  totalVehicles: Yup.string().trim().required('Total vehicles is required.'),
-  averageVehicleAge: Yup.string()
-    .trim()
-    .required('Average vehicle age is required.'),
-  wheelchairAccessibleCount: Yup.string()
-    .trim()
-    .required('Wheelchair accessible count is required.'),
-  stretcherAccessibleCount: Yup.string()
-    .trim()
-    .required('Stretcher accessible count is required.'),
-  ambulatoryVehicles: Yup.string()
-    .trim()
-    .required('Ambulatory vehicles is required.'),
+  totalVehicles: wholeNumberField('Total vehicles'),
+  averageVehicleAge: wholeNumberField('Average vehicle age'),
+  wheelchairAccessibleCount: wholeNumberField('Wheelchair accessible count'),
+  stretcherAccessibleCount: wholeNumberField('Stretcher accessible count'),
+  ambulatoryVehicles: wholeNumberField('Ambulatory vehicles'),
   insuranceProvider: Yup.string()
     .trim()
     .required('Insurance provider is required.'),
@@ -285,9 +259,9 @@ export const StartApplicationDrawer = ({
   open,
   onClose,
 }: StartApplicationDrawerProps) => {
-  const [uploadedFiles, setUploadedFiles] = useState<Record<string, string>>(
-    {}
-  );
+  const [uploadedFiles, setUploadedFiles] = useState<Record<string, File>>({});
+  const { submitApplication, isSubmitting: isSubmittingApplication } =
+    useFleetApplicationApi();
 
   const handleUpload = (key: string, file?: File | null) => {
     if (!file) {
@@ -296,7 +270,7 @@ export const StartApplicationDrawer = ({
 
     setUploadedFiles((prev) => ({
       ...prev,
-      [key]: file.name,
+      [key]: file,
     }));
   };
 
@@ -529,8 +503,24 @@ export const StartApplicationDrawer = ({
             <Formik
               initialValues={initialValues}
               validationSchema={validationSchema}
-              onSubmit={async (_, actions) => {
-                await new Promise((resolve) => setTimeout(resolve, 900));
+              onSubmit={async (values, actions) => {
+                const documents: FleetPartnerApplicationDocument[] =
+                  Object.entries(uploadedFiles).map(([key, file]) => ({
+                    key,
+                    file,
+                  }));
+
+                const success = await submitApplication({
+                  ...values,
+                  documents,
+                });
+
+                if (success) {
+                  actions.resetForm();
+                  setUploadedFiles({});
+                  onClose();
+                }
+
                 actions.setSubmitting(false);
               }}
             >
@@ -947,7 +937,7 @@ export const StartApplicationDrawer = ({
                                 <UploadRow
                                   label={label}
                                   documentKey={label}
-                                  fileName={uploadedFiles[label]}
+                                  fileName={uploadedFiles[label]?.name}
                                   onUpload={handleUpload}
                                 />
                                 {uploadedFiles[label] ? (
@@ -959,7 +949,7 @@ export const StartApplicationDrawer = ({
                                       px: 1,
                                     }}
                                   >
-                                    Selected: {uploadedFiles[label]}
+                                    Selected: {uploadedFiles[label].name}
                                   </Typography>
                                 ) : null}
                               </Stack>
@@ -1059,7 +1049,7 @@ export const StartApplicationDrawer = ({
                               <Checkbox
                                 checked={Boolean(
                                   values[
-                                    fieldName as keyof ApplicationFormValues
+                                    fieldName as keyof FleetPartnerApplicationFormValues
                                   ]
                                 )}
                                 onChange={(_, checked) =>
@@ -1119,8 +1109,12 @@ export const StartApplicationDrawer = ({
                         type="submit"
                         // variant="contained"
                         // color="primary"
-                        isLoading={isSubmitting}
-                        disabled={isSubmitting || !(dirty && isValid)}
+                        isLoading={isSubmitting || isSubmittingApplication}
+                        disabled={
+                          isSubmitting ||
+                          isSubmittingApplication ||
+                          !(dirty && isValid)
+                        }
                         sx={{
                           //   minWidth: { xs: '100%', sm: 220 },
                           //   minHeight: 48,
