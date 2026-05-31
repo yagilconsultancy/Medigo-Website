@@ -1,3 +1,5 @@
+'use client';
+
 import { FormikAppTextFieldProps } from '../FormikAppTextField';
 import { useFormikAppTextField } from '../../../common';
 import { AppPasswordField } from '../AppPasswordField';

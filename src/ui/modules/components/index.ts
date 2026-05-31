@@ -33,3 +33,4 @@ export * from './AppDatePickerPopover';
 export * from './AppFilterPopover';
 export * from './AppSelectDropdown';
 export * from './AppNumberField';
+export * from './TawkToWidget';

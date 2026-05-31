@@ -1,6 +1,5 @@
 'use client';
 
-import Image from 'next/image';
 import { useState } from 'react';
 import Grid from '@mui/material/Grid';
 import { Box, Stack, Typography } from '@mui/material';

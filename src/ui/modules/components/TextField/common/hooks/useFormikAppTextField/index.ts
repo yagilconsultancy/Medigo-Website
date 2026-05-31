@@ -1,3 +1,5 @@
+'use client';
+
 import { FormikAppTextFieldProps } from '../../../ui/components/FormikAppTextField';
 import { useField } from 'formik';
 import { ChangeEvent } from 'react';

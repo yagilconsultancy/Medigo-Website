@@ -1,3 +1,5 @@
+'use client';
+
 import { AppTextField, AppTextFieldProps } from '../AppTextField';
 import { useAppPasswordField } from './common/hooks';
 import { VisibilityOffRounded, VisibilityRounded } from '@mui/icons-material';
