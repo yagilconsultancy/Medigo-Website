@@ -918,14 +918,18 @@ export function PrivacyPage() {
                       }}
                     >
                       Email:{' '}
+                      <Box component="span" sx={{ color: '#2F6FED' }}>
+                        info@getmedigo.com
+                      </Box>
                       <Box
                         component="span"
                         sx={{
                           color: '#2F6FED',
+                          display: 'block',
                           textDecoration: 'underline',
                         }}
                       >
-                        privacy@medigo.com
+                        support@getmedigo.com
                       </Box>
                     </Typography>
 
@@ -935,10 +939,10 @@ export function PrivacyPage() {
                         fontSize: pxToRem(14),
                       }}
                     >
-                      Phone: 1-855-MEDIGO (1-855-633-4461)
+                      Phone: 1-416-521-3116
                     </Typography>
 
-                    <Typography
+                    {/* <Typography
                       sx={{
                         color: '#6B7280',
                         fontSize: pxToRem(14),
@@ -946,11 +950,11 @@ export function PrivacyPage() {
                     >
                       Address: 123 Healthcare Drive, Suite 400, Toronto, ON M5H
                       2N2, Canada
-                    </Typography>
+                    </Typography> */}
                   </Stack>
                 </Box>
 
-                <Box
+                {/* <Box
                   sx={{
                     mt: pxToRem(4),
                     display: 'flex',
@@ -975,7 +979,7 @@ export function PrivacyPage() {
                     This page reflects the content provided in the product
                     design.
                   </Typography>
-                </Box>
+                </Box> */}
               </Stack>
             </Stack>
           </Paper>
