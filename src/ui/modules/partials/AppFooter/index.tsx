@@ -349,9 +349,9 @@ export function AppFooter() {
             © {new Date().getFullYear()} MediGo. All rights reserved.
           </Typography>
           <RowStack spacing={'15.3px'}>
-            <FooterLink link="Privacy Policy" href="#/privacy-policy" />
-            <FooterLink link="Terms of Service" href="#/terms-of-service" />
-            <FooterLink link="Accessibility" href="#/accessibility" />
+            <FooterLink link="Privacy Policy" href="/privacy-policy" />
+            <FooterLink link="Terms of Service" href="/terms-of-service" />
+            {/* <FooterLink link="Accessibility" href="#/accessibility" /> */}
           </RowStack>
         </Stack>
       </Box>
