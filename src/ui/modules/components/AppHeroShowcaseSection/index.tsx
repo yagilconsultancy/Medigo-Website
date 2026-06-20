@@ -313,34 +313,34 @@ export function AppHeroShowcaseSection({
           '-=0.65'
         );
 
-      if (enableParallax && image) {
-        triggers.push(
-          ScrollTrigger.create({
-            trigger: root,
-            start: 'top top',
-            end: 'bottom top',
-            scrub: true,
-            invalidateOnRefresh: true,
-            onUpdate: (self) => {
-              gsap.set(image, { y: self.progress * 24 });
-            },
-          })
-        );
-      }
+      // if (enableParallax && image) {
+      //   triggers.push(
+      //     ScrollTrigger.create({
+      //       trigger: root,
+      //       start: 'top top',
+      //       end: 'bottom top',
+      //       scrub: true,
+      //       invalidateOnRefresh: true,
+      //       onUpdate: (self) => {
+      //         gsap.set(image, { y: self.progress * 24 });
+      //       },
+      //     })
+      //   );
+      // }
 
-      if (enablePin && window.matchMedia('(min-width: 900px)').matches) {
-        triggers.push(
-          ScrollTrigger.create({
-            trigger: root,
-            start: 'top top',
-            end: '+=180%',
-            pin: true,
-            pinSpacing: true,
-            anticipatePin: 1,
-            invalidateOnRefresh: true,
-          })
-        );
-      }
+      // if (enablePin && window.matchMedia('(min-width: 900px)').matches) {
+      //   triggers.push(
+      //     ScrollTrigger.create({
+      //       trigger: root,
+      //       start: 'top top',
+      //       end: '+=180%',
+      //       pin: true,
+      //       pinSpacing: true,
+      //       anticipatePin: 1,
+      //       invalidateOnRefresh: true,
+      //     })
+      //   );
+      // }
     }
 
     if (tickerTrackRef.current) {

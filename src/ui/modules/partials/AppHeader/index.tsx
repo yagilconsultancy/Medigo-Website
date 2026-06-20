@@ -16,7 +16,7 @@ import { Close, Menu } from '@mui/icons-material';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
-import { AppButton, AppLogo, RowStack } from '../../components';
+import { AppButton, AppLogo, RowStack, StyledLink } from '../../components';
 import { pxToRem } from '../../../../common';
 
 const navItems = [
@@ -168,7 +168,7 @@ export function AppHeader() {
           </RowStack>
 
           <AppButton
-            component={Link}
+            component={StyledLink}
             href={`${process.env['NEXT_PUBLIC_WEB_BOOING_URL']}`}
             variant="contained"
             sx={{
