@@ -167,10 +167,8 @@ export function AppHeader() {
             ))}
           </RowStack>
 
-          <AppButton
-            component={StyledLink}
+          <StyledLink
             href={`${process.env['NEXT_PUBLIC_WEB_BOOING_URL']}`}
-            variant="contained"
             sx={{
               display: { xs: 'none', md: 'inline-flex' },
               borderRadius: '999999px',
@@ -189,7 +187,7 @@ export function AppHeader() {
             }}
           >
             Book a Ride
-          </AppButton>
+          </StyledLink>
 
           <IconButton
             aria-label="Open navigation menu"
