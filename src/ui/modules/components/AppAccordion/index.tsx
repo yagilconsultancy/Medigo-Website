@@ -44,6 +44,7 @@ export function AppAccordion({
           '0px 1px 3px 0px rgba(0,0,0,0.1), 0px 1px 2px 0px rgba(0,0,0,0.1)',
         border: '1px solid rgba(17, 24, 39, 0.04)',
         overflow: 'hidden',
+        pb: 2,
         backgroundColor: (theme) => theme.palette.background.default,
         '&:before': {
           display: 'none',
