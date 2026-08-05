@@ -26,9 +26,9 @@ const quickLinks = [
 ];
 
 const services = [
-  { title: 'Medical Transport', href: '/services#medical-transport' },
-  { title: 'Care Assistant', href: '/services#care-assistant' },
-  { title: 'Wellness Trips', href: '/services#wellness-trips' },
+  { title: 'Medical Transport', href: '/how-it-works' },
+  { title: 'Care Assistant', href: '/how-it-works' },
+  { title: 'Wellness Trips', href: '/how-it-works' },
 ];
 
 const socialLinks = [
@@ -200,7 +200,7 @@ export function AppFooter() {
             </Stack>
           </Grid>
 
-          <Grid size={{ xs: 6, sm: 6, lg: 2 }}>
+          {/* <Grid size={{ xs: 6, sm: 6, lg: 2 }}>
             <Stack spacing={2}>
               <Typography
                 sx={{
@@ -222,7 +222,7 @@ export function AppFooter() {
                 ))}
               </Stack>
             </Stack>
-          </Grid>
+          </Grid> */}
 
           <Grid size={{ xs: 12, sm: 6, lg: 3 }}>
             <Stack spacing={2}>

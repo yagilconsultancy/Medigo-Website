@@ -1285,8 +1285,10 @@ export const HomePage = () => {
               >
                 <Box
                   component="a"
-                  href="https://apps.apple.com/us/app/medigo-medical-transportation/id6777170324"
+                  href="https://apps.apple.com/app/medigo-medical-transportation/id6777170324"
                   aria-label="Download on the App Store"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   sx={{
                     display: 'flex',
                     alignItems: 'center',
@@ -1339,8 +1341,10 @@ export const HomePage = () => {
 
                 <Box
                   component="a"
-                  href="https://play.google.com/store/apps/details?id=com.abctransportationhealthinc.medigo&hl=en"
+                  href="https://play.google.com/store/apps/details?id=com.abctransportationhealthinc.medigo"
                   aria-label="Get it on Google Play"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   sx={{
                     display: 'flex',
                     alignItems: 'center',
