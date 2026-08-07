@@ -1,0 +1,33 @@
+services:
+  medigo-website:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        NEXT_PUBLIC_BASE_API_URL: ${NEXT_PUBLIC_BASE_API_URL}
+        NEXT_PUBLIC_SOCKET_URL: ${NEXT_PUBLIC_SOCKET_URL}
+        NEXT_PUBLIC_WEB_BOOING_URL: ${NEXT_PUBLIC_WEB_BOOING_URL}
+        NEXT_PUBLIC_CLOUD_FRONT_URL: ${NEXT_PUBLIC_CLOUD_FRONT_URL}
+        NEXT_PUBLIC_TAWK_CHAT_ID: ${NEXT_PUBLIC_TAWK_CHAT_ID}
+    container_name: medigo-website
+    restart: unless-stopped
+    # 3000 inside; 3200 on the host because 3100 is medigo-interface and
+    # 8080/8006/8007 belong to the backend.
+    ports:
+      - '3200:3000'
+    environment:
+      - NODE_ENV=production
+    healthcheck:
+      test:
+        [
+          'CMD',
+          'wget',
+          '--no-verbose',
+          '--tries=1',
+          '--spider',
+          'http://localhost:3000',
+        ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s

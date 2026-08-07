@@ -99,6 +99,54 @@ To run the production server after building:
 npx next start
 ```
 
+## Deployment (AWS EC2)
+
+The site runs as a Docker container on the same EC2 box as the backend and
+`medigo-interface`, in `~/medigo-website`, listening on host port **3200**
+(3100 is `medigo-interface`; 8080/8006/8007 are the backend).
+
+### One-time server setup
+
+The deploy workflow assumes the checkout already exists, so create it once:
+
+```bash
+ssh -i <key> ec2-user@<PROD_HOST>
+git clone git@github.com:yagilconsultancy/Medigo-Website.git ~/medigo-website
+cd ~/medigo-website
+cp .env.example .env   # then fill in real values
+docker compose up -d --build
+```
+
+### Required GitHub secrets
+
+Set these on the **Medigo-Website** repo (`Settings → Secrets and variables → Actions`).
+They are separate from the other repos' secrets:
+
+| Secret | Purpose |
+| --- | --- |
+| `EC2_HOST` / `EC2_USER` / `EC2_SSH_KEY` | SSH target for the deploy job |
+| `NEXT_PUBLIC_BASE_API_URL` | API base; the app throws without it |
+| `NEXT_PUBLIC_WEB_BOOING_URL` | "Book a Ride" CTA target |
+| `NEXT_PUBLIC_SOCKET_URL` | Socket.IO endpoint |
+| `NEXT_PUBLIC_CLOUD_FRONT_URL` | CDN base for assets (optional) |
+| `NEXT_PUBLIC_TAWK_CHAT_ID` | Live chat widget (optional) |
+
+Every one is a `NEXT_PUBLIC_*` value baked into the client bundle at build time,
+so changing any of them needs a rebuild rather than a restart, and none may hold
+a genuine secret.
+
+### Deploying
+
+Pushing to `main` runs lint + build, then rebuilds and restarts the container on
+EC2. To deploy by hand from a workstation:
+
+```bash
+make deploy    # git pull + rebuild + restart on the server
+make logs      # tail container logs
+make ps        # show container status
+make rebuild   # rebuild from the server's current tree, no git pull
+```
+
 ## Project Structure
 
 ```text
