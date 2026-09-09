@@ -1,4 +1,4 @@
-.PHONY: deploy rebuild ssh logs ps up down restart prune key
+.PHONY: bootstrap deploy rebuild ssh logs ps up down restart prune key
 
 # ===========================================
 # Website (Next.js) production deployment
@@ -9,6 +9,7 @@ PROD_HOST ?= 15.222.199.206
 PROD_USER ?= ec2-user
 SSH_KEY   ?= ../Medigo-Backend/medigo-prod
 APP_DIR   ?= /home/ec2-user/medigo-website
+REPO_URL  ?= https://github.com/yagilconsultancy/Medigo-Website.git
 
 # PubkeyAcceptedAlgorithms re-enables RSA-SHA2 for the RSA key
 # (newer OpenSSH disables ssh-rsa by default -> "Permission denied (publickey)").
@@ -19,6 +20,14 @@ SSH = ssh -i $(SSH_KEY) -o StrictHostKeyChecking=accept-new \
 # SSH refuses keys with loose permissions; fix them before connecting.
 key:
 	@chmod 600 $(SSH_KEY) 2>/dev/null || true
+
+# First-time setup on a fresh box: clone the repo into $(APP_DIR). `deploy`
+# assumes the clone already exists and fails with "No such file or directory"
+# otherwise. The .env still has to be created by hand afterwards (see
+# .env.example) — the NEXT_PUBLIC_* values are baked in at build time, so the
+# build produces a broken bundle without it.
+bootstrap: key
+	$(SSH) 'test -d $(APP_DIR) && echo "$(APP_DIR) already exists, nothing to do" || git clone $(REPO_URL) $(APP_DIR)'
 
 # Full deploy: pull latest code, rebuild the image, restart, then reclaim build
 # cache (the --no-cache build fills /mnt/docker-data otherwise).

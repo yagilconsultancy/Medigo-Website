@@ -8,6 +8,10 @@ export const ROUTES_SPEC = {
   logout: `/${API_VERSION}/auth/logout`,
   refresh: `/${API_VERSION}/auth/refresh`,
   applyFleetPartnerApplication: `/${API_VERSION}/users/public/fleet/apply`,
+  // Public account deletion (the URL published on the Google Play listing).
+  requestAccountDeletion: `/${API_VERSION}/users/public/account-deletion/request`,
+  verifyAccountDeletion: `/${API_VERSION}/users/public/account-deletion/verify`,
+  resendAccountDeletionOtp: `/${API_VERSION}/users/public/account-deletion/resend-otp`,
   getSupportKpis: `/${API_VERSION}/support/kpis`,
   listSupportTickets: `/${API_VERSION}/support/tickets`,
   reopenTicket: (ticketId: string) =>
