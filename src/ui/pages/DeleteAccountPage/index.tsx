@@ -314,7 +314,7 @@ export function DeleteAccountPage() {
                               <AppLabel required>Full Name</AppLabel>
                               <FormikAppTextField
                                 name="fullName"
-                                placeholder="John Doe"
+                                placeholder="Type your full name here."
                                 fullWidth
                               />
                             </Stack>
@@ -327,7 +327,7 @@ export function DeleteAccountPage() {
                               </AppLabel>
                               <FormikAppTextField
                                 name="emailAddress"
-                                placeholder="john@example.com"
+                                placeholder="Enter your email here."
                                 fullWidth
                               />
                             </Stack>
@@ -338,7 +338,7 @@ export function DeleteAccountPage() {
                               <AppLabel required>Registered Phone Number</AppLabel>
                               <FormikAppTextField
                                 name="phoneNumber"
-                                placeholder="(555) 123-4567"
+                                placeholder="Enter your phone number"
                                 fullWidth
                               />
                             </Stack>
