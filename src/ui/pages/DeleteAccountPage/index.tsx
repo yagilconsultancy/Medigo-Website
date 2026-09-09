@@ -335,7 +335,7 @@ export function DeleteAccountPage() {
 
                           <Grid size={{ xs: 12, md: 6 }}>
                             <Stack spacing={1}>
-                              <AppLabel>Registered Phone Number</AppLabel>
+                              <AppLabel required>Registered Phone Number</AppLabel>
                               <FormikAppTextField
                                 name="phoneNumber"
                                 placeholder="(555) 123-4567"
