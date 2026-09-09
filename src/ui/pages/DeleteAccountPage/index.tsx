@@ -49,7 +49,7 @@ const validationSchema = Yup.object({
     .trim()
     .email('Please enter a valid email address.')
     .required('Email is required.'),
-  phoneNumber: Yup.string().trim(),
+  phoneNumber: Yup.string().trim().required('Email is required.'),
   reason: Yup.string().trim().max(2000, 'Please keep this under 2000 characters.'),
   confirmUnderstanding: Yup.boolean().oneOf(
     [true],
