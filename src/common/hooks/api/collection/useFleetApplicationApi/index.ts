@@ -8,6 +8,40 @@ import { extractResponseErrors, tryExecute } from '../../../../utils';
 
 const toNumber = (value: string) => Number(value.trim());
 
+// The server explains what went wrong in `message` (and `details` for form
+// field problems). Show that, so the applicant knows what to fix.
+const getSubmitErrorMessage = (error: any): string => {
+  const status = error?.response?.status;
+  const data = error?.response?.data;
+
+  if (status === 413) {
+    return 'Your documents are too large to send together. Each file must be 10 MB or smaller and all files together 18 MB or smaller.';
+  }
+
+  if (data && typeof data === 'object') {
+    if (Array.isArray(data.details) && data.details.length > 0) {
+      const fields = data.details
+        .map((item: any) =>
+          Array.isArray(item?.loc) ? String(item.loc[item.loc.length - 1]) : ''
+        )
+        .filter(Boolean);
+      if (fields.length > 0) {
+        return `Please check these fields and try again: ${fields
+          .map((field: string) => field.replace(/_/g, ' '))
+          .join(', ')}.`;
+      }
+    }
+
+    if (typeof data.message === 'string' && data.message.trim()) {
+      return data.message;
+    }
+
+    return extractResponseErrors(data) as string;
+  }
+
+  return 'We could not submit your application. Please check your connection and try again.';
+};
+
 const documentFieldMap: Record<
   string,
   keyof ApiApplyFleetPartnerApplicationPayload
@@ -101,14 +135,7 @@ export const useFleetApplicationApi = () => {
         toast.error(extractResponseErrors(responseData));
       },
       async (error) => {
-        const responseData = error?.response?.data;
-
-        if (responseData) {
-          toast.error(extractResponseErrors(responseData));
-          return;
-        }
-
-        toast.error('An error occurred');
+        toast.error(getSubmitErrorMessage(error));
       }
     );
 

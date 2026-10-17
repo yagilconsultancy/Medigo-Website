@@ -19,6 +19,7 @@ import {
   FleetPartnerApplicationFormValues,
 } from '../../../../../../common/types';
 import { ReactNode, useState } from 'react';
+import { toast } from 'sonner';
 import networkRequirementIcon from '../../assets/icons/Icon-5.svg';
 import companyInformationIcon from '../../assets/icons/Icon-6.svg';
 import primaryContactIcon from '../../assets/icons/Icon-8.svg';
@@ -122,6 +123,14 @@ const requiredDocuments = [
   'Driver certifications and abstracts',
   'Safety and compliance records',
 ];
+
+// The server accepts PDF, JPG and PNG files only, up to 10 MB each. The
+// combined limit keeps the whole request under the 20 MB the server allows.
+const MAX_FILE_BYTES = 10 * 1024 * 1024;
+const MAX_TOTAL_BYTES = 18 * 1024 * 1024;
+const ALLOWED_EXTENSIONS = ['pdf', 'jpg', 'jpeg', 'png'];
+
+const formatMb = (bytes: number) => `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
 
 const sectionCardSx = {
   backgroundColor: '#FFFFFF',
@@ -245,7 +254,7 @@ const UploadRow = ({
       </Stack>
       <VisuallyHiddenInput
         type="file"
-        accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
+        accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
         onChange={(event) => {
           onUpload(documentKey, event.currentTarget.files?.[0]);
           event.currentTarget.value = '';
@@ -265,6 +274,31 @@ export const StartApplicationDrawer = ({
 
   const handleUpload = (key: string, file?: File | null) => {
     if (!file) {
+      return;
+    }
+
+    const extension = file.name.split('.').pop()?.toLowerCase() ?? '';
+    if (!ALLOWED_EXTENSIONS.includes(extension)) {
+      toast.error(
+        `"${file.name}" cannot be uploaded. Please use a PDF, JPG or PNG file (Word files are not accepted).`
+      );
+      return;
+    }
+
+    if (file.size > MAX_FILE_BYTES) {
+      toast.error(
+        `"${file.name}" is ${formatMb(file.size)}. Each file must be 10 MB or smaller.`
+      );
+      return;
+    }
+
+    const otherFilesBytes = Object.entries(uploadedFiles)
+      .filter(([existingKey]) => existingKey !== key)
+      .reduce((total, [, existing]) => total + existing.size, 0);
+    if (otherFilesBytes + file.size > MAX_TOTAL_BYTES) {
+      toast.error(
+        `All documents together must be 18 MB or smaller. Please compress or reduce the files.`
+      );
       return;
     }
 
@@ -929,6 +963,17 @@ export const StartApplicationDrawer = ({
                           >
                             The following documents will be required during the
                             verification process:
+                          </Typography>
+                          <Typography
+                            sx={{
+                              mt: 0.5,
+                              color: '#4A5565',
+                              fontSize: pxToRem(13),
+                              lineHeight: 1.45,
+                            }}
+                          >
+                            Accepted files: PDF, JPG or PNG. Up to 10 MB per
+                            file and 18 MB in total.
                           </Typography>
 
                           <Stack spacing={0.5} sx={{ mt: 1.5 }}>
