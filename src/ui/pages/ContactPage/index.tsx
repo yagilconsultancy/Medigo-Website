@@ -463,7 +463,7 @@ export const ContactPage = () => {
                                 }}
                               >
                                 * Required fields. We typically respond within
-                                24 hours.
+                                24–48 hours.
                               </Typography>
                             </Grid>
 
