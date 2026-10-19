@@ -309,9 +309,9 @@ const featureCardSections2: FeatureCardSectionConfig[] = [
         icon: coreCoordinationIcon,
       },
       {
-        title: '24/7 Support',
+        title: 'Dedicated Support',
         description:
-          'Our customer service team is available around the clock to assist with any needs.',
+          'Our customer service team is available Monday to Friday, 9 AM–5 PM ET, to assist with any needs.',
         icon: support247Icon,
       },
       {

@@ -16,7 +16,12 @@ import {
   StyledImage,
   AppCtaBanner,
 } from '@/ui/modules/components';
-import { pxToRem } from '../../../common';
+import {
+  pxToRem,
+  sendContactMessage,
+  tooManyRequestsMessage,
+} from '../../../common';
+import { isAxiosError } from 'axios';
 import phoneIcon from './ui/assets/icons/phone.svg';
 import emailIcon from './ui/assets/icons/location.svg';
 import officeIcon from './ui/assets/icons/mail.svg';
@@ -85,6 +90,11 @@ const faqItems = [
 
 export const ContactPage = () => {
   const [expandedFaq, setExpandedFaq] = useState<string>(faqItems[0].id);
+  // 'sent' only after the server confirms; 'error' keeps what was typed.
+  const [sendState, setSendState] = useState<'idle' | 'sent' | 'error'>(
+    'idle'
+  );
+  const [sendError, setSendError] = useState('');
 
   return (
     <AppLayout>
@@ -138,12 +148,12 @@ export const ContactPage = () => {
                         icon: phoneIcon,
                         title: 'Phone',
                         value: '1-416-521-3116',
-                        note: 'Mon-Fri 8am-8pm EST',
+                        note: 'Mon–Fri, 9 AM–5 PM ET',
                       },
                       {
                         icon: emailIcon,
                         title: 'Email',
-                        value: 'info@getmedigo.com',
+                        value: 'admin@getmedigo.com',
                         note: '24-48 hour response time',
                       },
                       {
@@ -298,11 +308,36 @@ export const ContactPage = () => {
                       initialValues={initialValues}
                       validationSchema={validationSchema}
                       onSubmit={async (values, actions) => {
-                        await new Promise((resolve) =>
-                          setTimeout(resolve, 900)
-                        );
-                        actions.resetForm();
-                        actions.setSubmitting(false);
+                        setSendState('idle');
+                        setSendError('');
+                        try {
+                          await sendContactMessage({
+                            full_name: values.fullName.trim(),
+                            email: values.emailAddress.trim(),
+                            phone: values.phoneNumber.trim() || null,
+                            service_type: values.serviceType,
+                            message: values.message.trim(),
+                          });
+                          actions.resetForm();
+                          setSendState('sent');
+                        } catch (error) {
+                          let text =
+                            'We could not send your message. Please try again, or email admin@getmedigo.com.';
+                          if (isAxiosError(error) && error.response) {
+                            if (error.response.status === 429) {
+                              text = tooManyRequestsMessage(
+                                error.response.headers?.['retry-after']
+                              );
+                            } else if (error.response.status === 422) {
+                              text =
+                                'Please check your details: the email address must be valid and every required field filled in.';
+                            }
+                          }
+                          setSendError(text);
+                          setSendState('error');
+                        } finally {
+                          actions.setSubmitting(false);
+                        }
                       }}
                     >
                       {({ isSubmitting, dirty, isValid }) => (
@@ -431,6 +466,33 @@ export const ContactPage = () => {
                                 24 hours.
                               </Typography>
                             </Grid>
+
+                            {sendState !== 'idle' && (
+                              <Grid size={{ xs: 12 }}>
+                                <Box
+                                  role={sendState === 'sent' ? 'status' : 'alert'}
+                                  aria-live="polite"
+                                  sx={{
+                                    borderRadius: '12px',
+                                    px: 2,
+                                    py: 1.5,
+                                    backgroundColor:
+                                      sendState === 'sent' ? '#ECFDF5' : '#FEF2F2',
+                                    border: '1px solid',
+                                    borderColor:
+                                      sendState === 'sent' ? '#A7F3D0' : '#FECACA',
+                                    color:
+                                      sendState === 'sent' ? '#065F46' : '#991B1B',
+                                    fontSize: pxToRem(15),
+                                    lineHeight: 1.5,
+                                  }}
+                                >
+                                  {sendState === 'sent'
+                                    ? 'Thank you. Your message has been sent and our team will reply within 24–48 hours.'
+                                    : sendError}
+                                </Box>
+                              </Grid>
+                            )}
                           </Grid>
                         </Box>
                       )}

@@ -128,7 +128,7 @@ const processItems = [
     bullets: [
       'MediGo handles all dispatch',
       'Ride assignments sent to your fleet',
-      '24/7 operational support',
+      'Operational support, Monday to Friday',
     ],
     accentColor: 'processPurple',
   },
