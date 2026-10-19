@@ -919,17 +919,7 @@ export function PrivacyPage() {
                     >
                       Email:{' '}
                       <Box component="span" sx={{ color: '#2F6FED' }}>
-                        info@getmedigo.com
-                      </Box>
-                      <Box
-                        component="span"
-                        sx={{
-                          color: '#2F6FED',
-                          display: 'block',
-                          textDecoration: 'underline',
-                        }}
-                      >
-                        support@getmedigo.com
+                        admin@getmedigo.com
                       </Box>
                     </Typography>
 

@@ -47,7 +47,7 @@ const socialLinks = [
     href: 'https://www.linkedin.com/company/medigo-canada',
     icon: LinkedIn,
   },
-  { label: 'Email', href: 'mailto:info@getmedigo.com', icon: MailOutline },
+  { label: 'Email', href: 'mailto:admin@getmedigo.com', icon: MailOutline },
 ];
 
 export function AppFooter() {
@@ -149,7 +149,7 @@ export function AppFooter() {
                       fontWeight: 400,
                     }}
                   >
-                    Info@getmedigo.com
+                    admin@getmedigo.com
                   </Typography>
                 </RowStack>
                 <RowStack spacing={'10px'}>
@@ -282,7 +282,7 @@ export function AppFooter() {
                       lineHeight: '21px',
                     }}
                   >
-                    24/7 Emergency Dispatch
+                    Customer Support
                   </Typography>
                   <Typography
                     sx={{
@@ -292,7 +292,7 @@ export function AppFooter() {
                       lineHeight: '19.5px',
                     }}
                   >
-                    For urgent transportation needs
+                    Mon–Fri, 9 AM–5 PM ET. In an emergency, call 911.
                   </Typography>
                 </Stack>
                 <Typography

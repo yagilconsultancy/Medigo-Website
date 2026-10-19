@@ -324,7 +324,7 @@ export function TermsPage() {
                         lineHeight: pxToRem(21),
                       }}
                     >
-                      Email: info@getmedigo.com
+                      Email: admin@getmedigo.com
                     </Typography>
 
                     <Typography
@@ -344,7 +344,7 @@ export function TermsPage() {
                         lineHeight: pxToRem(21),
                       }}
                     >
-                      Hours: Monday - Friday, 9:00 AM - 5:00 PM EST
+                      Hours: Monday - Friday, 9:00 AM - 5:00 PM ET
                     </Typography>
                   </Stack>
                 </Box>

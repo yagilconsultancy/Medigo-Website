@@ -348,7 +348,7 @@ export const AboutPage = () => {
                       textAlign: 'center',
                     }}
                   >
-                    24/7
+                    Mon–Fri
                   </Typography>
 
                   <Typography

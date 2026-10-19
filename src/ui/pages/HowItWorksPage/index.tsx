@@ -74,9 +74,9 @@ const featureCardSections = [
         icon: coreCoordinationIcon,
       },
       {
-        title: '24/7 Support',
+        title: 'Dedicated Support',
         description:
-          'Our customer service team is available around the clock to assist with any needs.',
+          'Our customer service team is available Monday to Friday, 9 AM–5 PM ET, to assist with any needs.',
         icon: support247Icon,
       },
       {
@@ -188,7 +188,7 @@ export function HowItWorksPage() {
                       textAlign: 'center',
                     }}
                   >
-                    24/7
+                    Mon–Fri
                   </Box>
                   <Box
                     sx={{
