@@ -354,6 +354,35 @@ export function AppFooter() {
             {/* <FooterLink link="Accessibility" href="#/accessibility" /> */}
           </RowStack>
         </Stack>
+        <Typography
+          sx={{
+            textAlign: 'center',
+            color: '#9CA3AF',
+            fontSize: { xs: pxToRem(12), sm: pxToRem(13), md: pxToRem(14) },
+            lineHeight: 1.5,
+            fontWeight: 400,
+            mt: { xs: 2, md: 3 },
+          }}
+        >
+          Designed &amp; Developed by{' '}
+          <Box
+            component="a"
+            href="https://www.yagildigitalstudios.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            sx={{
+              color: (theme) => theme.color.footerText,
+              fontWeight: 600,
+              textDecoration: 'none',
+              '&:hover': {
+                textDecoration: 'underline',
+                color: (theme) => theme.palette.background.default,
+              },
+            }}
+          >
+            YAGIL DIGITAL STUDIOS
+          </Box>
+        </Typography>
       </Box>
     </Box>
   );
