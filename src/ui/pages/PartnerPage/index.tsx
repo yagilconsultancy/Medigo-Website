@@ -527,6 +527,7 @@ export const PartnerPage = () => {
           primaryActionLabel="Apply to Become a Partner"
           secondaryActionLabel="Schedule a Consultation"
           primaryActionHref="/partners"
+          onPrimaryActionClick={() => setIsApplicationDrawerOpen(true)}
           secondaryActionHref="/contact"
         />
       </AppRevealOnScroll>
