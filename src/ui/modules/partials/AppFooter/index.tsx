@@ -339,7 +339,8 @@ export function AppFooter() {
         >
           <Typography
             sx={{
-              textAlign: 'center',
+              flex: { md: 1 },
+              textAlign: { xs: 'center', md: 'left' },
               color: (theme) => theme.color.footerText,
               fontSize: { xs: pxToRem(13), sm: pxToRem(14), md: pxToRem(16) },
               lineHeight: 1.5,
@@ -348,41 +349,47 @@ export function AppFooter() {
           >
             © {new Date().getFullYear()} MediGo. All rights reserved.
           </Typography>
-          <RowStack spacing={'15.3px'}>
+          <Typography
+            sx={{
+              flex: { md: 'none' },
+              textAlign: 'center',
+              color: '#9CA3AF',
+              fontSize: { xs: pxToRem(12), sm: pxToRem(13), md: pxToRem(14) },
+              lineHeight: 1.5,
+              fontWeight: 400,
+            }}
+          >
+            Designed &amp; Developed by{' '}
+            <Box
+              component="a"
+              href="https://www.yagildigitalstudios.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              sx={{
+                color: (theme) => theme.color.footerText,
+                fontWeight: 600,
+                textDecoration: 'none',
+                '&:hover': {
+                  textDecoration: 'underline',
+                  color: (theme) => theme.palette.background.default,
+                },
+              }}
+            >
+              YAGIL DIGITAL STUDIOS
+            </Box>
+          </Typography>
+          <RowStack
+            spacing={'15.3px'}
+            sx={{
+              flex: { md: 1 },
+              justifyContent: { xs: 'center', md: 'flex-end' },
+            }}
+          >
             <FooterLink link="Privacy Policy" href="/privacy-policy" />
             <FooterLink link="Terms of Service" href="/terms-of-service" />
             {/* <FooterLink link="Accessibility" href="#/accessibility" /> */}
           </RowStack>
         </Stack>
-        <Typography
-          sx={{
-            textAlign: 'center',
-            color: '#9CA3AF',
-            fontSize: { xs: pxToRem(12), sm: pxToRem(13), md: pxToRem(14) },
-            lineHeight: 1.5,
-            fontWeight: 400,
-            mt: { xs: 2, md: 3 },
-          }}
-        >
-          Designed &amp; Developed by{' '}
-          <Box
-            component="a"
-            href="https://www.yagildigitalstudios.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            sx={{
-              color: (theme) => theme.color.footerText,
-              fontWeight: 600,
-              textDecoration: 'none',
-              '&:hover': {
-                textDecoration: 'underline',
-                color: (theme) => theme.palette.background.default,
-              },
-            }}
-          >
-            YAGIL DIGITAL STUDIOS
-          </Box>
-        </Typography>
       </Box>
     </Box>
   );
