@@ -15,7 +15,21 @@ type AppCtaBannerProps = {
   secondaryActionLabel: string;
   primaryActionHref: string;
   secondaryActionHref: string;
+  onPrimaryActionClick?: () => void;
 };
+
+// Keep hyphenated words (e.g. "Non-Emergency") together so a line never ends on "Non-".
+function renderTitle(title: string) {
+  return title.split(/(\S+-\S+)/g).map((part, index) =>
+    index % 2 === 1 ? (
+      <span key={index} style={{ whiteSpace: 'nowrap' }}>
+        {part}
+      </span>
+    ) : (
+      part
+    )
+  );
+}
 
 export function AppCtaBanner({
   title,
@@ -24,6 +38,7 @@ export function AppCtaBanner({
   secondaryActionLabel,
   primaryActionHref,
   secondaryActionHref,
+  onPrimaryActionClick,
 }: AppCtaBannerProps) {
   const rootRef = useRef<HTMLDivElement | null>(null);
   const [isVisible, setIsVisible] = useState(false);
@@ -76,7 +91,7 @@ export function AppCtaBanner({
         backgroundImage:
           'linear-gradient(159.68852709271874deg, rgb(67, 45, 215) 0%, rgb(20, 71, 230) 50%, rgb(21, 93, 252) 100%)',
         px: { xs: 3, sm: 4, md: 6, lg: 8 },
-        py: { xs: 4, md: 0 },
+        py: { xs: 4, md: 6 },
       }}
     >
       <Box
@@ -108,7 +123,7 @@ export function AppCtaBanner({
                   maxWidth: { xs: '100%', md: '90%' },
                 }}
               >
-                {title}
+                {renderTitle(title)}
               </Typography>
 
               <Typography
@@ -134,8 +149,9 @@ export function AppCtaBanner({
                 sx={{ pt: { xs: 1, md: 2 }, ...revealStyle(260) }}
               >
                 <AppButton
-                  component={Link}
-                  href={primaryActionHref}
+                  {...(onPrimaryActionClick
+                    ? { onClick: onPrimaryActionClick }
+                    : { component: Link, href: primaryActionHref })}
                   variant="contained"
                   sx={{
                     minWidth: { xs: '100%', sm: 210, md: 281 },
@@ -160,14 +176,14 @@ export function AppCtaBanner({
                   variant="contained"
                   sx={{
                     minWidth: { xs: '100%', sm: 210, md: 265 },
-                    height: { xs: 52, sm: 60, md: 66 },
+                    height: { xs: 52, sm: 60, md: 64 },
                     borderRadius: '9999px',
                     px: 3,
                     backgroundColor: 'rgba(255, 255, 255, 0.12)',
                     color: '#FFFFFF',
                     border: '0.764px solid rgba(255, 255, 255, 0.4)',
                     fontSize: { xs: pxToRem(16), md: pxToRem(18) },
-                    fontWeight: 600,
+                    fontWeight: 700,
                     '&:hover': {
                       backgroundColor: 'rgba(255, 255, 255, 0.18)',
                     },
